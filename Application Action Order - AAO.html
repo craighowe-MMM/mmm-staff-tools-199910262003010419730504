@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MatchMe Money - Application Action Order</title>
+    <style>
+        :root {
+            --lime: #8ACF3A;
+            --forest: #2A4210;
+            --charcoal: #1C1C1C;
+            --sand: #FFF4D7;
+            --coral: #FF7E67;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: var(--sand);
+            color: var(--charcoal);
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, var(--forest), var(--lime));
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            margin: 0;
+            font-size: 2.5em;
+            font-weight: 300;
+        }
+        
+        .header p {
+            margin: 10px 0 0 0;
+            opacity: 0.9;
+            font-size: 1.1em;
+        }
+        
+        .content {
+            padding: 40px;
+        }
+        
+        .view-toggle {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 30px;
+            gap: 10px;
+        }
+        
+        .toggle-btn {
+            padding: 12px 24px;
+            border: 2px solid var(--forest);
+            background: var(--sand);
+            color: var(--forest);
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .toggle-btn.active {
+            background: var(--forest);
+            color: white;
+        }
+        
+        .toggle-btn:hover {
+            background: var(--lime);
+            border-color: var(--lime);
+            color: white;
+        }
+        
+        .view {
+            display: none;
+        }
+        
+        .view.active {
+            display: block;
+        }
+        
+        /* Flow Chart Styles */
+        .flow-chart {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        
+        .flow-section {
+            background: var(--sand);
+            border-radius: 8px;
+            padding: 20px;
+            border-left: 6px solid var(--lime);
+        }
+        
+        .flow-section h3 {
+            color: var(--forest);
+            margin: 0 0 15px 0;
+            font-size: 1.3em;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .priority-badge {
+            background: var(--coral);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.8em;
+            font-weight: bold;
+        }
+        
+        .flow-item {
+            background: white;
+            padding: 15px;
+            margin: 8px 0;
+            border-radius: 6px;
+            border-left: 4px solid var(--lime);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            position: relative;
+        }
+        
+        .flow-item.priority-1 { border-left-color: var(--coral); }
+        .flow-item.priority-2 { border-left-color: #ff9580; }
+        .flow-item.priority-3 { border-left-color: #ffab99; }
+        .flow-item.priority-4 { border-left-color: #ffc1b3; }
+        .flow-item.priority-5 { border-left-color: #ffd7cc; }
+        .flow-item.priority-6 { border-left-color: #ffede6; }
+        .flow-item.priority-7 { border-left-color: var(--lime); }
+        .flow-item.priority-8 { border-left-color: #ff7f50; }
+        .flow-item.priority-9 { border-left-color: var(--lime); }
+        .flow-item.priority-10 { border-left-color: #ffcc99; }
+        .flow-item.priority-11 { border-left-color: #ffcc99; }
+        
+        .flow-item h4 {
+            margin: 0 0 8px 0;
+            color: var(--charcoal);
+            font-size: 1.1em;
+        }
+        
+        .flow-item p {
+            margin: 0;
+            color: #666;
+            font-size: 0.9em;
+        }
+        
+        .priority-number {
+            position: absolute;
+            top: -8px;
+            right: 15px;
+            background: var(--coral);
+            color: white;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 0.8em;
+        }
+        
+        /* Task List Styles */
+        .task-list {
+            display: grid;
+            gap: 20px;
+        }
+        
+        .priority-section {
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        
+        .priority-header {
+            background: var(--forest);
+            color: white;
+            padding: 15px 20px;
+            font-weight: 600;
+            font-size: 1.1em;
+        }
+        
+        .priority-list {
+            padding: 0;
+            margin: 0;
+            list-style: none;
+        }
+        
+        .priority-list li {
+            padding: 15px 20px;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            transition: background 0.2s ease;
+        }
+        
+        .priority-list li:hover {
+            background: var(--sand);
+        }
+        
+        .priority-list li:last-child {
+            border-bottom: none;
+        }
+        
+        .status-indicator {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: var(--lime);
+            flex-shrink: 0;
+        }
+        
+        .priority-list li:nth-child(-n+9) .status-indicator {
+            background: var(--coral);
+        }
+        
+        .priority-list li:nth-child(n+10):nth-child(-n+14) .status-indicator {
+            background: var(--lime);
+        }
+        
+        .priority-list li:nth-child(15) .status-indicator {
+            background: #ffcc99;
+        }
+        
+        .status-name {
+            font-weight: 600;
+            color: var(--charcoal);
+            flex-grow: 1;
+        }
+        
+        .status-type {
+            background: var(--sand);
+            color: var(--forest);
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.8em;
+            font-weight: 500;
+        }
+        
+        .arrow {
+            font-size: 1.5em;
+            color: var(--lime);
+            text-align: center;
+            margin: 10px 0;
+        }
+        
+        @media (max-width: 768px) {
+            .content {
+                padding: 20px;
+            }
+            
+            .header h1 {
+                font-size: 2em;
+            }
+            
+            .view-toggle {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Application Action Order</h1>
+            <p>MatchMe Money Finance Brokerage Process Flow</p>
+        </div>
+        
+        <div class="content">
+            <div class="view-toggle">
+                <button class="toggle-btn active" onclick="showView('flow')">Flow Chart View</button>
+                <button class="toggle-btn" onclick="showView('list')">Priority Task List</button>
+            </div>
+            
+            <div class="important-notice" style="background: var(--coral); color: white; padding: 20px; border-radius: 8px; margin-bottom: 30px;">
+                <h3 style="margin: 0 0 10px 0; font-size: 1.2em;">⚠️ Daily Priority Management</h3>
+                <p style="margin: 0; line-height: 1.5;">
+                    <strong>Prioritise your task list daily and monitor for status changes regularly.</strong> 
+                    When you notice a status change, finish the current application you're working on, then immediately move to the application with the higher priority status. 
+                    Only return to lower priority applications once all higher priority status applications are completed.
+                </p>
+            </div>
+            
+            <!-- Flow Chart View -->
+            <div id="flow-view" class="view active">
+                <div class="flow-chart">
+                    <div class="flow-section">
+                        <h3><span class="priority-badge">HIGH PRIORITY</span> Customer Action Required</h3>
+                        <div class="flow-item priority-1">
+                            <div class="priority-number">1</div>
+                            <h4>Match Review - Information Received</h4>
+                            <p>🚨 URGENT: Customer information received from call center - must be escalated to account owner (OG) immediately</p>
+                        </div>
+                        <div class="flow-item priority-2">
+                            <div class="priority-number">2</div>
+                            <h4>Matched - Awaiting Customer</h4>
+                            <p>Loan approved! Customer has been given good news and next steps, waiting for their response</p>
+                        </div>
+                        <div class="flow-item priority-3">
+                            <div class="priority-number">3</div>
+                            <h4>Matched</h4>
+                            <p>Loan approved! Ready to contact customer with good news and explain finalization process</p>
+                        </div>
+                        <div class="flow-item priority-4">
+                            <div class="priority-number">4</div>
+                            <h4>Submitted for Finance - Awaiting Customer</h4>
+                            <p>Finance company requires additional information from customer</p>
+                        </div>
+                        <div class="flow-item priority-5">
+                            <div class="priority-number">5</div>
+                            <h4>Match Review - Awaiting Customer</h4>
+                            <p>Need additional customer information before can submit to finance company</p>
+                        </div>
+                    </div>
+                    
+                    <div class="arrow">↓</div>
+                    
+                    <div class="flow-section">
+                        <h3>Internal Processing</h3>
+                        <div class="flow-item priority-6">
+                            <div class="priority-number">6</div>
+                            <h4>Match Review</h4>
+                            <p>Reviewing potential matches for customer</p>
+                        </div>
+                        <div class="flow-item priority-7">
+                            <div class="priority-number">7</div>
+                            <h4>Submitted - Awaiting Finance Company</h4>
+                            <p>Application submitted, waiting for finance company response</p>
+                        </div>
+                        <div class="flow-item priority-8">
+                            <div class="priority-number">8</div>
+                            <h4>Match Review - New Finance Partner Needed</h4>
+                            <p>Current match unsuccessful, need to find alternative finance partner</p>
+                        </div>
+                        <div class="flow-item priority-9">
+                            <div class="priority-number">9</div>
+                            <h4>Submitted for Finance</h4>
+                            <p>Application with finance company for 24+ hours without response</p>
+                        </div>
+                    </div>
+                    
+                    <div class="arrow">↓</div>
+                    
+                    <div class="flow-section">
+                        <h3>Work in Progress - Processing & Documentation</h3>
+                        <div class="flow-item priority-10">
+                            <div class="priority-number">10</div>
+                            <h4>Awaiting Drivers License</h4>
+                            <p>Waiting for driver's license documentation</p>
+                        </div>
+                        <div class="flow-item priority-10">
+                            <div class="priority-number">10</div>
+                            <h4>Awaiting Bank Statement</h4>
+                            <p>Waiting for bank statement documentation</p>
+                        </div>
+                        <div class="flow-item priority-10">
+                            <div class="priority-number">10</div>
+                            <h4>Awaiting Further Information</h4>
+                            <p>Additional information or documentation required</p>
+                        </div>
+                        <div class="flow-item priority-10">
+                            <div class="priority-number">10</div>
+                            <h4>Awaiting Bank Statement and Drivers License</h4>
+                            <p>Waiting for both bank statement and driver's license</p>
+                        </div>
+                        <div class="flow-item priority-11">
+                            <div class="priority-number">11</div>
+                            <h4>Approved - On Hold</h4>
+                            <p>Application approved but temporarily on hold</p>
+                        </div>
+                    </div>
+                    
+                    <div class="arrow">↓</div>
+                    
+                    <div class="flow-section">
+                        <h3>Initial Application Processing</h3>
+                        <div class="flow-item">
+                            <h4>Application Submitted</h4>
+                            <p>New application received and ready for processing</p>
+                        </div>
+                        <div class="flow-item">
+                            <h4>Submitted for Finance</h4>
+                            <p>Application recently submitted to finance partners (under 24 hours)</p>
+                        </div>
+                    </div>
+                    
+                    <div class="arrow">↓</div>
+                    
+                    <div class="flow-section">
+                        <h3>Documentation Required (Single Document)</h3>
+                        <div class="flow-item">
+                            <h4>Awaiting Drivers License</h4>
+                            <p>Waiting for driver's license documentation</p>
+                        </div>
+                        <div class="flow-item">
+                            <h4>Awaiting Bank Statement</h4>
+                            <p>Waiting for bank statement documentation</p>
+                        </div>
+                        <div class="flow-item">
+                            <h4>Awaiting Further Information</h4>
+                            <p>Additional information or documentation required</p>
+                        </div>
+                    </div>
+                    
+                    <div class="arrow">↓</div>
+                    
+                    <div class="flow-section">
+                        <h3>Documentation Required (Multiple Documents)</h3>
+                        <div class="flow-item">
+                            <h4>Awaiting Bank Statement and Drivers License</h4>
+                            <p>Waiting for both bank statement and driver's license</p>
+                        </div>
+                    </div>
+                    
+                    <div class="arrow">↓</div>
+                    
+                    <div class="flow-section">
+                        <h3>Final Processing & Closure</h3>
+                        <div class="flow-item">
+                            <h4>Submitted for Settlement</h4>
+                            <p>Application approved and submitted for final settlement</p>
+                        </div>
+                        <div class="flow-item">
+                            <h4>Settled</h4>
+                            <p>Finance settled and completed successfully</p>
+                        </div>
+                        <div class="flow-item">
+                            <h4>Completed</h4>
+                            <p>Application process fully completed</p>
+                        </div>
+                        <div class="flow-item">
+                            <h4>Withdrawn</h4>
+                            <p>Application withdrawn by customer</p>
+                        </div>
+                        <div class="flow-item">
+                            <h4>Withdrawn - Joint Application</h4>
+                            <p>Joint application withdrawn</p>
+                        </div>
+                        <div class="flow-item">
+                            <h4>Withdrawn Duplicated Account - Closed</h4>
+                            <p>Duplicate account identified and closed</p>
+                        </div>
+                        <div class="flow-item">
+                            <h4>Unwanted</h4>
+                            <p>Application marked as unwanted/unsuitable</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Task List View -->
+            <div id="list-view" class="view">
+                <div class="task-list">
+                    <div class="priority-section">
+                        <div class="priority-header">🔥 URGENT - Customer Action Required</div>
+                        <ul class="priority-list">
+                            <li>
+                                <div class="status-indicator"></div>
+                                <div class="status-name">Match Review - Information Received</div>
+                                <div class="status-type">Priority 1 - URGENT</div>
+                            </li>
+                            <li>
+                                <div class="status-indicator"></div>
+                                <div class="status-name">Matched - Awaiting Customer</div>
+                                <div class="status-type">Priority 2</div>
+                            </li>
+                            <li>
+                                <div class="status-indicator"></div>
+                                <div class="status-name">Matched</div>
+                                <div class="status-type">Priority 3</div>
+                            </li>
+                            <li>
+                                <div class="status-indicator"></div>
+                                <div class="status-name">Submitted for Finance - Awaiting Customer</div>
+                                <div class="status-type">Priority 4</div>
+                            </li>
+                            <li>
+                                <div class="status-indicator"></div>
+                                <div class="status-name">Match Review - Awaiting Customer</div>
+                                <div class="status-type">Priority 5</div>
+                            </li>
+                            <li>
+                                <div class="status-indicator"></div>
+                                <div class="status-name">Match Review</div>
+                                <div class="status-type">Priority 6</div>
+                            </li>
+                            <li>
+                                <div class="status-indicator"></div>
+                                <div class="status-name">Submitted - Awaiting Finance Company</div>
+                                <div class="status-type">Priority 7</div>
+                            </li>
+                            <li>
+                                <div class="status-indicator"></div>
+                                <div class="status-name">Match Review - New Finance Partner Needed</div>
+                                <div class="status-type">Priority 8</div>
+                            </li>
+                            <li>
+                                <div class="status-indicator"></div>
+                                <div class="status-name">Submitted for Finance</div>
+                                <div class="status-type">Priority 9 - 24hrs+</div>
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    <div class="priority-section">
+                        <div class="priority-header">📄 Work in Progress - Processing & Documentation</div>
+                        <ul class="priority-list">
+                            <li>
+                                <div class="status-indicator"></div>
+                                <div class="status-name">Awaiting Drivers License</div>
+                                <div class="status-type">Priority 10</div>
+                            </li>
+                            <li>
+                                <div class="status-indicator"></div>
+                                <div class="status-name">Awaiting Bank Statement</div>
+                                <div class="status-type">Priority 10</div>
+                            </li>
+                            <li>
+                                <div class="status-indicator"></div>
+                                <div class="status-name">Awaiting Further Information</div>
+                                <div class="status-type">Priority 10</div>
+                            </li>
+                            <li>
+                                <div class="status-indicator"></div>
+                                <div class="status-name">Awaiting Bank Statement and Drivers License</div>
+                                <div class="status-type">Priority 10</div>
+                            </li>
+                            <li>
+                                <div class="status-indicator"></div>
+                                <div class="status-name">Approved - On Hold</div>
+                                <div class="status-type">Priority 11</div>
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    <div class="priority-section">
+                        <div class="priority-header">📋 Standard Processing</div>
+                        <ul class="priority-list">
+                            <li>
+                                <div class="status-indicator"></div>
+                                <div class="status-name">Application Submitted</div>
+                                <div class="status-type">New</div>
+                            </li>
+                            <li>
+                                <div class="status-indicator"></div>
+                                <div class="status-name">Submitted for Finance</div>
+                                <div class="status-type">Under 24hrs</div>
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    <div class="priority-section">
+                        <div class="priority-header">✅ Final Stages & Closure</div>
+                        <ul class="priority-list">
+                            <li>
+                                <div class="status-indicator"></div>
+                                <div class="status-name">Submitted for Settlement</div>
+                                <div class="status-type">Settlement</div>
+                            </li>
+                            <li>
+                                <div class="status-indicator"></div>
+                                <div class="status-name">Settled</div>
+                                <div class="status-type">Complete</div>
+                            </li>
+                            <li>
+                                <div class="status-indicator"></div>
+                                <div class="status-name">Completed</div>
+                                <div class="status-type">Final</div>
+                            </li>
+                            <li>
+                                <div class="status-indicator"></div>
+                                <div class="status-name">Withdrawn</div>
+                                <div class="status-type">Closed</div>
+                            </li>
+                            <li>
+                                <div class="status-indicator"></div>
+                                <div class="status-name">Withdrawn - Joint Application</div>
+                                <div class="status-type">Closed</div>
+                            </li>
+                            <li>
+                                <div class="status-indicator"></div>
+                                <div class="status-name">Withdrawn Duplicated Account - Closed</div>
+                                <div class="status-type">Closed</div>
+                            </li>
+                            <li>
+                                <div class="status-indicator"></div>
+                                <div class="status-name">Unwanted</div>
+                                <div class="status-type">Closed</div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        function showView(viewType) {
+            // Hide all views
+            document.querySelectorAll('.view').forEach(view => {
+                view.classList.remove('active');
+            });
+            
+            // Remove active class from all buttons
+            document.querySelectorAll('.toggle-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            
+            // Show selected view
+            if (viewType === 'flow') {
+                document.getElementById('flow-view').classList.add('active');
+                document.querySelector('.toggle-btn').classList.add('active');
+            } else {
+                document.getElementById('list-view').classList.add('active');
+                document.querySelectorAll('.toggle-btn')[1].classList.add('active');
+            }
+        }
+    </script>
+</body>
+</html>

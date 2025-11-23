@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Outbound Call Planning Guide - MatchMe Money</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #FFF4D7;
+            color: #1C1C1C;
+            line-height: 1.6;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background-color: #ffffff;
+            padding: 0;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #8ACF3A 0%, #2A4210 100%);
+            color: #ffffff;
+            padding: 40px 30px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 2.8em;
+            margin-bottom: 10px;
+            font-weight: 700;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        }
+        
+        .header p {
+            font-size: 1.3em;
+            opacity: 0.95;
+        }
+        
+        .contact-info {
+            background-color: #FFF4D7;
+            border: 5px solid #8ACF3A;
+            padding: 30px;
+            margin: 30px;
+            text-align: center;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(138, 207, 58, 0.3);
+        }
+        
+        .contact-info .phone {
+            font-size: 3em;
+            font-weight: bold;
+            color: #2A4210;
+            margin: 15px 0;
+            letter-spacing: 1px;
+        }
+        
+        .contact-info .email {
+            font-size: 2em;
+            font-weight: bold;
+            color: #FF7E67;
+            margin: 15px 0;
+        }
+        
+        .content {
+            padding: 30px 40px;
+        }
+        
+        .section {
+            margin-bottom: 40px;
+        }
+        
+        .section h2 {
+            background-color: #8ACF3A;
+            color: #ffffff;
+            padding: 15px 25px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            font-size: 1.8em;
+            font-weight: 600;
+            box-shadow: 0 2px 5px rgba(138, 207, 58, 0.3);
+        }
+        
+        .section h3 {
+            color: #2A4210;
+            margin: 25px 0 15px 0;
+            font-size: 1.4em;
+            padding-left: 20px;
+            border-left: 6px solid #FF7E67;
+            font-weight: 600;
+        }
+        
+        .section h4 {
+            color: #2A4210;
+            margin: 15px 0 10px 0;
+            font-size: 1.2em;
+            font-weight: 600;
+        }
+        
+        .section ul {
+            list-style: none;
+            padding-left: 0;
+            margin: 15px 0;
+        }
+        
+        .section li {
+            padding: 10px 0 10px 40px;
+            position: relative;
+            line-height: 1.7;
+        }
+        
+        .section li::before {
+            content: "●";
+            color: #8ACF3A;
+            font-size: 1.5em;
+            position: absolute;
+            left: 15px;
+            top: 8px;
+        }
+        
+        .script-box {
+            background-color: #FFF4D7;
+            border-left: 6px solid #FF7E67;
+            padding: 20px 25px;
+            margin: 20px 0;
+            font-style: italic;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(255, 126, 103, 0.2);
+            line-height: 1.8;
+        }
+        
+        .goals-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 25px;
+            margin: 25px 0;
+        }
+        
+        .goal-card {
+            background-color: #FFF4D7;
+            padding: 25px;
+            border-radius: 10px;
+            border: 3px solid #8ACF3A;
+            box-shadow: 0 2px 8px rgba(138, 207, 58, 0.2);
+        }
+        
+        .goal-card h4 {
+            color: #2A4210;
+            margin-bottom: 15px;
+            font-size: 1.3em;
+            border-bottom: 2px solid #8ACF3A;
+            padding-bottom: 10px;
+        }
+        
+        .tips-box {
+            background-color: #2A4210;
+            color: #FFF4D7;
+            padding: 30px;
+            border-radius: 10px;
+            margin-top: 30px;
+            box-shadow: 0 4px 15px rgba(42, 66, 16, 0.3);
+        }
+        
+        .tips-box h2 {
+            background-color: transparent;
+            color: #8ACF3A;
+            padding: 0 0 15px 0;
+            border-bottom: 3px solid #8ACF3A;
+            margin-bottom: 20px;
+        }
+        
+        .tips-box li::before {
+            color: #FF7E67;
+        }
+        
+        .tips-box strong {
+            color: #8ACF3A;
+            display: inline-block;
+            min-width: 280px;
+        }
+        
+        .tips-box .dash {
+            color: #FF7E67;
+            margin: 0 8px;
+        }
+        
+        strong {
+            color: #2A4210;
+            font-weight: 600;
+        }
+        
+        .script-box strong {
+            color: #FF7E67;
+        }
+        
+        @media print {
+            body {
+                background-color: white;
+                padding: 0;
+            }
+            
+            .container {
+                box-shadow: none;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .goals-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .header h1 {
+                font-size: 2em;
+            }
+            
+            .contact-info .phone {
+                font-size: 2em;
+            }
+            
+            .contact-info .email {
+                font-size: 1.4em;
+            }
+            
+            .content {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Outbound Call Planning Guide</h1>
+            <p>MatchMe Money Finance Brokerage</p>
+        </div>
+        
+        <div class="contact-info">
+            <div class="phone">📞 0800 696 282</div>
+            <div class="email">✉️ customer@matchmemoney.co.nz</div>
+        </div>
+        
+        <div class="content">
+            <div class="section">
+                <h2>Pre-Call Preparation</h2>
+                
+                <h3>Review Borrower Information</h3>
+                <ul>
+                    <li>Check application form for basic details (name, loan amount, loan type)</li>
+                    <li>Review credit score and any flags</li>
+                    <li>Note employment status and income level</li>
+                    <li>Check if secured (car/vehicle) or unsecured (personal) loan</li>
+                    <li>Review any previous communication notes</li>
+                    <li>Identify any special circumstances (self-employed, multiple income sources, etc.)</li>
+                </ul>
+                
+                <h3>Understand the Loan Request</h3>
+                <ul>
+                    <li>Loan amount and purpose</li>
+                    <li>For vehicle loans: vehicle age and estimated value</li>
+                    <li>For vehicle loans: buying privately or from a dealer</li>
+                    <li>For vehicle loans: do they have a vehicle already (trade-in potential)</li>
+                    <li>Deposit amount available (if applicable)</li>
+                    <li>Preferred loan term</li>
+                    <li>Any time constraints or urgency</li>
+                </ul>
+                
+                <h3>Check What's Missing</h3>
+                <ul>
+                    <li>Identify which documents are outstanding</li>
+                    <li>Note any incomplete information in application</li>
+                    <li>Check if previous follow-ups have been attempted</li>
+                </ul>
+            </div>
+            
+            <div class="section">
+                <h2>Call Goals & Objectives</h2>
+                
+                <div class="goals-grid">
+                    <div class="goal-card">
+                        <h4>Primary Goals</h4>
+                        <ul>
+                            <li>Build rapport and trust with the customer</li>
+                            <li>Obtain bank statements (last 3 months)</li>
+                            <li>Obtain photo ID (driver's license or passport)</li>
+                            <li>Confirm accuracy of application information</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="goal-card">
+                        <h4>Secondary Goals</h4>
+                        <ul>
+                            <li>Understand customer's timeline and urgency</li>
+                            <li>Identify any concerns or questions they have</li>
+                            <li>Set expectations for next steps</li>
+                            <li>Schedule follow-up if needed</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="section">
+                <h2>Basic Call Scripts</h2>
+                
+                <h3>Opening Script</h3>
+                <div class="script-box">
+                    "Hi [Customer Name], this is [Your Name] calling from MatchMe Money. How are you today? I'm calling about your loan application. Is now a good time to chat for a few minutes?"
+                </div>
+                <p><strong>If not a good time:</strong></p>
+                <div class="script-box">
+                    "No problem at all. When would be a better time for me to call you back?"
+                </div>
+                
+                <h3>Building Rapport</h3>
+                <div class="script-box">
+                    "Thanks for choosing MatchMe Money to help with your [loan type - car loan/personal loan]. I can see you're looking at [vehicle type/loan purpose] - that sounds great!"
+                </div>
+                <div class="script-box">
+                    "I'm here to make this process as smooth as possible for you. Have you been through the lending process before, or is this your first time?"
+                </div>
+                
+                <p><strong>For vehicle loans, ask:</strong></p>
+                <div class="script-box">
+                    "Just to confirm, are you buying from a dealer or privately? And do you currently have a vehicle that you might be trading in?"
+                </div>
+                
+                <h3>Requesting Documents</h3>
+                <p><strong>Bank Statements:</strong></p>
+                <div class="script-box">
+                    "To move forward with your application, I'll need your bank statements from the last 3 months. This helps us understand your financial position and get you the best possible deal. Can you email those through to customer@matchmemoney.co.nz?"
+                </div>
+                
+                <p><strong>Photo ID:</strong></p>
+                <div class="script-box">
+                    "I'll also need a copy of your photo ID - either your driver's license or passport. You can send that to the same email address: customer@matchmemoney.co.nz"
+                </div>
+                
+                <p><strong>If they're hesitant:</strong></p>
+                <div class="script-box">
+                    "I completely understand wanting to be careful with your documents. We're registered financial advisers and all your information is kept strictly confidential. These documents are standard requirements from all lenders."
+                </div>
+                
+                <h3>Confirming Information</h3>
+                <div class="script-box">
+                    "I just want to confirm a few details from your application to make sure everything's accurate..."
+                </div>
+                <ul>
+                    <li>Confirm employment and income</li>
+                    <li>Verify loan amount and deposit (if applicable)</li>
+                    <li>For vehicle loans: confirm vehicle details, age, value, and purchase method</li>
+                    <li>Check contact details are correct</li>
+                </ul>
+                
+                <h3>Addressing Concerns</h3>
+                <p><strong>If they're shopping around:</strong></p>
+                <div class="script-box">
+                    "That's absolutely fine - it's smart to compare options. What I can tell you is that we work with multiple lenders, so we can often find better rates than going direct. Once you send through your documents, I can give you a clear picture of what we can offer."
+                </div>
+                
+                <p><strong>If they're worried about approval:</strong></p>
+                <div class="script-box">
+                    "Let me have a look at what we can do. Every situation is different, and we specialize in finding solutions. Send through your documents and I'll give you an honest assessment of your options."
+                </div>
+                
+                <h3>Closing Script</h3>
+                <div class="script-box">
+                    "Great, so just to recap - you'll email your bank statements and photo ID to customer@matchmemoney.co.nz, and I'll review everything and give you a call back within [timeframe]. Do you have any questions for me?"
+                </div>
+                <div class="script-box">
+                    "Perfect. If you think of anything before then, feel free to call us on 0800 696 282 or email that same address. Thanks for your time today, [Customer Name]."
+                </div>
+                
+                <h3>If Voicemail</h3>
+                <div class="script-box">
+                    "Hi [Customer Name], this is [Your Name] from MatchMe Money calling about your loan application. I'd love to have a quick chat about next steps. Could you give me a call back on 0800 696 282, or reply to our email at customer@matchmemoney.co.nz? Thanks, and I look forward to speaking with you soon."
+                </div>
+            </div>
+            
+            <div class="section">
+                <h2>Post-Call Actions</h2>
+                
+                <h3>Immediate Follow-Up</h3>
+                <ul>
+                    <li>Send confirmation email summarizing what was discussed</li>
+                    <li>List documents needed with clear deadline</li>
+                    <li>Provide contact details again</li>
+                    <li>Set reminder for follow-up if documents not received</li>
+                </ul>
+                
+                <h3>CRM Notes</h3>
+                <ul>
+                    <li>Record call outcome and customer responses</li>
+                    <li>Note any concerns or special circumstances</li>
+                    <li>Update application status</li>
+                    <li>Schedule next action or follow-up date</li>
+                </ul>
+            </div>
+            
+            <div class="tips-box">
+                <h2>Tips for Success</h2>
+                <ul>
+                    <li><strong>Plan your call and set your goals</strong> <span class="dash">-</span> be prepared before you dial</li>
+                    <li><strong>Be friendly but professional</strong> <span class="dash">-</span> you're a trusted advisor</li>
+                    <li><strong>Listen actively</strong> <span class="dash">-</span> let customers express concerns</li>
+                    <li><strong>Be patient</strong> <span class="dash">-</span> many customers are stressed about lending</li>
+                    <li><strong>Show expertise</strong> <span class="dash">-</span> but avoid jargon</li>
+                    <li><strong>Set clear expectations</strong> <span class="dash">-</span> be honest about timelines</li>
+                    <li><strong>Follow up promptly</strong> <span class="dash">-</span> build trust through reliability</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,790 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MatchMe Money Finance Selector</title>
+    <style>
+        :root {
+            --primary-color: #2A4210; /* Forest */
+            --secondary-color: #8ACF3A; /* Lime */
+            --accent-color: #FF7E67; /* Coral */
+            --light-bg: #FFF4D7; /* Sand */
+            --dark-color: #1C1C1C; /* Charcoal */
+            --border-color: #ddd;
+        }
+        
+        * {
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: var(--light-bg);
+            color: var(--dark-color);
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 20px;
+            text-align: center;
+            border-radius: 8px 8px 0 0;
+        }
+        
+        h1 {
+            margin: 0;
+            font-size: 24px;
+        }
+        
+        form {
+            background-color: white;
+            padding: 30px;
+            border-radius: 0 0 8px 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .form-col {
+            flex: 1;
+            min-width: 250px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+        
+        input[type="number"], input[type="date"], select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            font-size: 16px;
+        }
+        
+        button {
+            background-color: var(--secondary-color);
+            color: var(--dark-color);
+            border: none;
+            padding: 12px 24px;
+            font-size: 16px;
+            font-weight: 600;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        button:hover {
+            background-color: #79b833;
+        }
+        
+        .results-container {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        
+        .results-header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 15px 20px;
+        }
+        
+        .results-header h2 {
+            margin: 0;
+            font-size: 20px;
+        }
+        
+        .results-content {
+            padding: 0;
+        }
+        
+        .no-results {
+            padding: 30px;
+            text-align: center;
+            color: #666;
+        }
+        
+        .company-card {
+            border-bottom: 1px solid var(--border-color);
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        
+        .company-card:last-child {
+            border-bottom: none;
+        }
+        
+        .company-name {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--primary-color);
+            margin: 0;
+        }
+        
+        .company-details {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+        }
+        
+        .detail-group {
+            flex: 1;
+            min-width: 200px;
+        }
+        
+        .detail-label {
+            font-weight: 600;
+            color: #666;
+            margin-bottom: 5px;
+            font-size: 14px;
+        }
+        
+        .detail-value {
+            font-size: 16px;
+        }
+        
+        .highlight {
+            background-color: rgba(255, 244, 215, 0.7);
+            border-left: 3px solid var(--accent-color);
+            padding: 15px;
+            margin-top: 15px;
+            border-radius: 0 4px 4px 0;
+        }
+        
+        .highlight-title {
+            color: var(--accent-color);
+            font-weight: 600;
+            margin: 0 0 5px 0;
+        }
+        
+        .warning {
+            color: var(--accent-color);
+            font-weight: 600;
+        }
+        
+        .security-fields {
+            display: none;
+        }
+        
+        .visa-field {
+            display: none;
+        }
+        
+        .last-option {
+            background-color: #fff3cd;
+            border-left: 3px solid #ffc107;
+            padding: 10px 15px;
+            margin-top: 10px;
+            border-radius: 0 4px 4px 0;
+            font-weight: 600;
+            color: #856404;
+        }
+        
+        @media (max-width: 768px) {
+            .form-col {
+                flex: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>MatchMe Money Finance Selector</h1>
+        </header>
+        
+        <form id="financeForm" onsubmit="findFinanceCompanies(event)">
+            <div class="form-row">
+                <div class="form-col">
+                    <div class="form-group">
+                        <label for="loanAmount">Loan Amount (NZD)</label>
+                        <input type="number" id="loanAmount" name="loanAmount" min="3000" max="1500000" placeholder="Enter amount (min $3,000)" required>
+                    </div>
+                </div>
+                
+                <div class="form-col">
+                    <div class="form-group">
+                        <label for="loanType">Loan Type</label>
+                        <select id="loanType" name="loanType" onchange="toggleSecurityFields()" required>
+                            <option value="">Select loan type</option>
+                            <option value="unsecured">Personal Loan (Unsecured)</option>
+                            <option value="secured-personal">Secured Personal Loan</option>
+                            <option value="vehicle-hp">Vehicle Hire Purchase</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            
+            <div id="securityFields" class="form-row security-fields">
+                <div class="form-col">
+                    <div class="form-group">
+                        <label for="securityValue">Security Value (NZD)</label>
+                        <input type="number" id="securityValue" name="securityValue" min="0" placeholder="Enter value of security/collateral">
+                    </div>
+                </div>
+                
+                <div class="form-col">
+                    <div class="form-group">
+                        <label for="securityType">Security Type</label>
+                        <select id="securityType" name="securityType">
+                            <option value="">Select security type</option>
+                            <option value="vehicle">Vehicle</option>
+                            <option value="property">Property</option>
+                            <option value="other">Other Asset</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="form-row">
+                <div class="form-col">
+                    <div class="form-group">
+                        <label for="employmentType">Employment Type</label>
+                        <select id="employmentType" name="employmentType" required>
+                            <option value="">Select employment type</option>
+                            <option value="fulltime">Full Time</option>
+                            <option value="parttime">Part Time</option>
+                            <option value="casual">Casual</option>
+                            <option value="selfemployed">Self Employed</option>
+                            <option value="beneficiary">Beneficiary</option>
+                            <option value="superannuation">Superannuation</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="form-col">
+                    <div class="form-group">
+                        <label for="residencyStatus">Residency Status</label>
+                        <select id="residencyStatus" name="residencyStatus" onchange="toggleVisaField()" required>
+                            <option value="">Select residency status</option>
+                            <option value="citizen">NZ Citizen</option>
+                            <option value="permanent">Permanent Resident</option>
+                            <option value="workvisa">Work Visa</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            
+            <div id="visaField" class="form-row visa-field">
+                <div class="form-col">
+                    <div class="form-group">
+                        <label for="visaEndDate">Visa End Date</label>
+                        <input type="date" id="visaEndDate" name="visaEndDate">
+                    </div>
+                </div>
+                <div class="form-col"></div>
+            </div>
+            
+            <div class="form-row">
+                <div class="form-col">
+                    <div class="form-group">
+                        <label for="age">Age of Applicant</label>
+                        <input type="number" id="age" name="age" min="18" max="100" placeholder="Enter age" required>
+                    </div>
+                </div>
+                
+                <div class="form-col">
+                    <div class="form-group">
+                        <label for="licenseType">License Type</label>
+                        <select id="licenseType" name="licenseType" required>
+                            <option value="">Select license type</option>
+                            <option value="learners">Learners</option>
+                            <option value="restricted">Restricted</option>
+                            <option value="full">Full</option>
+                            <option value="none">No License</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="form-row">
+                <div class="form-col">
+                    <div class="form-group">
+                        <label for="weeklyIncome">Weekly Income (NZD)</label>
+                        <input type="number" id="weeklyIncome" name="weeklyIncome" min="0" placeholder="Enter weekly income" required>
+                    </div>
+                </div>
+                
+                <div class="form-col">
+                    <div class="form-group">
+                        <label for="hasDefaults">Unpaid Financial Defaults?</label>
+                        <select id="hasDefaults" name="hasDefaults" required>
+                            <option value="">Select option</option>
+                            <option value="no">No</option>
+                            <option value="yes">Yes</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            
+            <button type="submit">Find Suitable Finance Companies</button>
+        </form>
+        
+        <div class="results-container" id="resultsContainer" style="display: none;">
+            <div class="results-header">
+                <h2>Suitable Finance Companies</h2>
+            </div>
+            <div class="results-content" id="resultsContent">
+                <!-- Results will be displayed here -->
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Finance companies data
+        const financeCompanies = [
+            {
+                name: "Avanti Finance",
+                vehicleHP: { min: 3000, max: 150000, rates: { min: 9.75, max: 24.95 }, ltvRatio: 1.0 },
+                securedPersonal: { min: 0, max: 0, rates: { min: 0, max: 0 } },
+                unsecured: { min: 3000, max: 75000, rates: { min: 14.95, max: 24.95 } },
+                workVisaUnsecured: { min: 3000, max: 5000, rates: { min: 14.95, max: 24.95 } },
+                acceptsBeneficiaryUnsecured: true,
+                acceptsLearnerLicense: false,
+                isLastOption: false
+            },
+            {
+                name: "Finance Now",
+                vehicleHP: { min: 3000, max: 75000, rates: { min: 9.99, max: 29.95 }, ltvRatio: 1.0, minCentrixScore: 450 },
+                securedPersonal: { min: 3000, max: 50000, rates: { min: 12.95, max: 29.95 }, noLtvLimit: true, minCentrixScore: 500 },
+                unsecured: { min: 3000, max: 50000, rates: { min: 12.95, max: 29.95 }, minCentrixScore: 500 },
+                workVisaUnsecured: false,
+                acceptsBeneficiaryUnsecured: true,
+                acceptsLearnerLicense: false,
+                isLastOption: false
+            },
+            {
+                name: "Financial Holdings",
+                vehicleHP: { min: 3000, max: 40000, rates: { min: 11.95, max: 24.95 }, ltvRatio: 1.0 },
+                securedPersonal: { min: 3000, max: 40000, rates: { min: 11.95, max: 24.95 }, ltvRatio: 1.0 },
+                unsecured: { min: 0, max: 0, rates: { min: 0, max: 0 } },
+                workVisaUnsecured: false,
+                acceptsBeneficiaryUnsecured: false,
+                acceptsLearnerLicense: false,
+                isLastOption: false
+            },
+            {
+                name: "Geneva Finance",
+                vehicleHP: { min: 3000, max: 60000, rates: { min: 11.25, max: 29.95 }, ltvRatio: 1.0 },
+                securedPersonal: { min: 3000, max: 60000, rates: { min: 11.25, max: 29.95 }, ltvRatio: 1.2 },
+                unsecured: { 
+                    propertyOwner: { min: 3000, max: 20000, rates: { min: 11.25, max: 29.95 } },
+                    nonPropertyOwner: { min: 3000, max: 10000, rates: { min: 11.25, max: 29.95 } },
+                    min: 3000, max: 10000, rates: { min: 11.25, max: 29.95 }
+                },
+                workVisaUnsecured: { min: 3000, max: 5000, rates: { min: 11.25, max: 29.95 } },
+                acceptsBeneficiaryUnsecured: false,
+                acceptsLearnerLicense: true,
+                isLastOption: false
+            },
+            {
+                name: "MTF Finance",
+                vehicleHP: { min: 3000, max: 250000, rates: { min: 11.5, max: 29.95 }, ltvRatio: 1.0 },
+                securedPersonal: { min: 3000, max: 40000, rates: { min: 11.5, max: 29.95 }, ltvRatio: 1.0 },
+                unsecured: { min: 3000, max: 40000, rates: { min: 11.5, max: 29.95 } },
+                workVisaUnsecured: false,
+                acceptsBeneficiaryUnsecured: false,
+                acceptsLearnerLicense: false,
+                isLastOption: false
+            },
+            {
+                name: "Nectar",
+                vehicleHP: { min: 3000, max: 40000, rates: { min: 12.95, max: 29.95 }, ltvRatio: 1.0 },
+                securedPersonal: { min: 3000, max: 40000, rates: { min: 12.95, max: 29.95 }, ltvRatio: 1.0 },
+                unsecured: { min: 3000, max: 40000, rates: { min: 12.95, max: 29.95 } },
+                workVisaUnsecured: false,
+                acceptsBeneficiaryUnsecured: false,
+                acceptsLearnerLicense: false,
+                isLastOption: false
+            },
+            {
+                name: "Pioneer",
+                vehicleHP: { min: 3000, max: 100000, rates: { min: 12.95, max: 19.95 }, ltvRatio: 1.0 },
+                securedPersonal: { min: 3000, max: 200000, rates: { min: 12.95, max: 19.95 }, ltvRatio: 1.0, propertyOnly: true },
+                unsecured: { min: 3000, max: 20000, rates: { min: 12.95, max: 19.95 } },
+                workVisaUnsecured: false,
+                acceptsBeneficiaryUnsecured: false,
+                acceptsLearnerLicense: false,
+                isLastOption: false
+            },
+            {
+                name: "Rhino Solutions",
+                vehicleHP: { min: 3000, max: 20000, rates: { min: 20.95, max: 29.95 }, ltvRatio: 1.0 },
+                securedPersonal: { min: 3000, max: 20000, rates: { min: 20.95, max: 29.95 }, ltvRatio: 1.0 },
+                unsecured: { min: 3000, max: 20000, rates: { min: 20.95, max: 29.95 } },
+                workVisaUnsecured: { min: 3000, max: 20000, rates: { min: 20.95, max: 29.95 } },
+                acceptsBeneficiaryUnsecured: false,
+                acceptsLearnerLicense: false,
+                isLastOption: false
+            },
+            {
+                name: "Aotea Finance",
+                vehicleHP: { min: 3000, max: 40000, rates: { min: 20.95, max: 34.95 }, ltvRatio: 1.0 },
+                securedPersonal: { min: 3000, max: 40000, rates: { min: 20.95, max: 34.95 }, noLtvLimit: true },
+                unsecured: { min: 3000, max: 40000, rates: { min: 20.95, max: 34.95 } },
+                workVisaUnsecured: { min: 3000, max: 10000, rates: { min: 20.95, max: 34.95 } },
+                acceptsBeneficiaryUnsecured: true,
+                acceptsLearnerLicense: true,
+                isLastOption: true
+            }
+        ];
+
+        // Toggle security fields based on loan type
+        function toggleSecurityFields() {
+            const loanType = document.getElementById('loanType').value;
+            const securityFields = document.getElementById('securityFields');
+            
+            if (loanType === 'secured-personal' || loanType === 'vehicle-hp') {
+                securityFields.style.display = 'flex';
+            } else {
+                securityFields.style.display = 'none';
+            }
+        }
+        
+        // Toggle visa end date field based on residency status
+        function toggleVisaField() {
+            const residencyStatus = document.getElementById('residencyStatus').value;
+            const visaField = document.getElementById('visaField');
+            
+            if (residencyStatus === 'workvisa') {
+                visaField.style.display = 'flex';
+            } else {
+                visaField.style.display = 'none';
+            }
+        }
+        
+        // Main function to find suitable finance companies
+        function findFinanceCompanies(event) {
+            // Prevent default form submission
+            event.preventDefault();
+            
+            // Get form values
+            const loanAmount = parseInt(document.getElementById('loanAmount').value) || 0;
+            const loanType = document.getElementById('loanType').value;
+            const securityValue = parseInt(document.getElementById('securityValue').value) || 0;
+            const securityType = document.getElementById('securityType').value;
+            const employmentType = document.getElementById('employmentType').value;
+            const residencyStatus = document.getElementById('residencyStatus').value;
+            const age = parseInt(document.getElementById('age').value) || 0;
+            const visaEndDate = document.getElementById('visaEndDate').value ? new Date(document.getElementById('visaEndDate').value) : null;
+            const licenseType = document.getElementById('licenseType').value;
+            const weeklyIncome = parseInt(document.getElementById('weeklyIncome').value) || 0;
+            const hasDefaults = document.getElementById('hasDefaults').value;
+            
+            // Basic validation
+            if (loanAmount < 3000) {
+                alert('Minimum loan amount is $3,000');
+                return;
+            }
+            
+            if (weeklyIncome < 500) {
+                alert('Minimum weekly income requirement is $500');
+                return;
+            }
+            
+            if (hasDefaults === 'yes') {
+                alert('Cannot proceed with unpaid financial defaults');
+                return;
+            }
+            
+            // Additional validation for secured loans
+            if ((loanType === 'secured-personal' || loanType === 'vehicle-hp') && 
+                (!securityValue || !securityType)) {
+                alert('Please enter security value and type for secured loans');
+                return;
+            }
+            
+            // Check visa end date for work visa holders
+            if (residencyStatus === 'workvisa' && !visaEndDate) {
+                alert('Please enter visa end date for work visa holders');
+                return;
+            }
+            
+            // Clear previous results
+            const resultsContent = document.getElementById('resultsContent');
+            resultsContent.innerHTML = '';
+            
+            // Array to store matching companies
+            const matchingCompanies = [];
+            
+            // Check each company
+            financeCompanies.forEach(company => {
+                let isMatch = false;
+                let loanProduct = null;
+                let loanTypeText = '';
+                
+                // Check if company offers the selected loan type and amount is within range
+                if (loanType === 'vehicle-hp') {
+                    if (loanAmount >= company.vehicleHP.min && loanAmount <= company.vehicleHP.max) {
+                        // Check security value requirement
+                        if (!securityValue || loanAmount <= securityValue * company.vehicleHP.ltvRatio) {
+                            isMatch = true;
+                            loanProduct = company.vehicleHP;
+                            loanTypeText = 'Vehicle Hire Purchase';
+                        }
+                    }
+                } 
+                else if (loanType === 'secured-personal') {
+                    // Skip companies that don't offer secured personal loans
+                    if (company.securedPersonal.min > 0) {
+                        if (loanAmount >= company.securedPersonal.min && loanAmount <= company.securedPersonal.max) {
+                            // Check property-only requirement
+                            if (!company.securedPersonal.propertyOnly || securityType === 'property') {
+                                // Check security value
+                                if (company.securedPersonal.noLtvLimit || !securityValue || 
+                                    loanAmount <= securityValue * (company.securedPersonal.ltvRatio || 1.0)) {
+                                    isMatch = true;
+                                    loanProduct = company.securedPersonal;
+                                    loanTypeText = 'Secured Personal Loan';
+                                    
+                                    if (company.securedPersonal.propertyOnly) {
+                                        loanTypeText += ' (Property Security Only)';
+                                    }
+                                }
+                            }
+                        }
+                    }
+                } 
+                else if (loanType === 'unsecured') {
+                    // Skip companies that don't offer unsecured loans
+                    if (company.unsecured && company.unsecured.min > 0) {
+                        let unsecuredProduct;
+                        
+                        // Special handling for Geneva Finance
+                        if (company.name === 'Geneva Finance') {
+                            unsecuredProduct = company.unsecured.nonPropertyOwner;
+                        } else {
+                            unsecuredProduct = company.unsecured;
+                        }
+                        
+                        if (loanAmount >= unsecuredProduct.min && loanAmount <= unsecuredProduct.max) {
+                            // Check beneficiary status
+                            if (employmentType !== 'beneficiary' || company.acceptsBeneficiaryUnsecured) {
+                                isMatch = true;
+                                loanProduct = unsecuredProduct;
+                                loanTypeText = 'Unsecured Personal Loan';
+                            }
+                        }
+                        
+                        // Check work visa for unsecured loans
+                        if (isMatch && residencyStatus === 'workvisa') {
+                            if (company.workVisaUnsecured) {
+                                if (loanAmount > company.workVisaUnsecured.max) {
+                                    isMatch = false;
+                                }
+                            } else {
+                                isMatch = false;
+                            }
+                        }
+                    }
+                }
+                
+                // If company is a match, add to matching companies
+                if (isMatch) {
+                    matchingCompanies.push({
+                        company: company,
+                        loanProduct: loanProduct,
+                        loanTypeText: loanTypeText
+                    });
+                }
+            });
+            
+            // Sort matching companies - put "last option" companies at the end
+            matchingCompanies.sort((a, b) => {
+                if (a.company.isLastOption && !b.company.isLastOption) return 1;
+                if (!a.company.isLastOption && b.company.isLastOption) return -1;
+                return 0;
+            });
+            
+            // Display results
+            if (matchingCompanies.length === 0) {
+                resultsContent.innerHTML = `
+                    <div class="no-results">
+                        <p>No matching finance companies found for the provided criteria.</p>
+                        <p>Please adjust your search parameters and try again.</p>
+                    </div>
+                `;
+            } else {
+                matchingCompanies.forEach(match => {
+                    const company = match.company;
+                    const loanProduct = match.loanProduct;
+                    const loanTypeText = match.loanTypeText;
+                    
+                    // Calculate maximum lend on security value
+                    let maxLendOnSecurity = 'N/A';
+                    let ltv = loanProduct.ltvRatio;
+                    
+                    if ((loanType === 'vehicle-hp' || loanType === 'secured-personal') && securityValue > 0) {
+                        if (company.name === 'Finance Now' || company.name === 'Aotea Finance' || loanProduct.noLtvLimit) {
+                            maxLendOnSecurity = 'No specific limit';
+                            ltv = 'No limit';
+                        } else if (company.name === 'Geneva Finance' && loanType === 'secured-personal') {
+                            maxLendOnSecurity = `$${(securityValue * 1.2).toLocaleString()}`;
+                        } else {
+                            maxLendOnSecurity = `$${(securityValue * 1.0).toLocaleString()}`;
+                        }
+                    }
+                    
+                    // Check if co-borrower is required
+                    let requiresCoborrower = false;
+                    const warnings = [];
+                    const notes = [];
+                    
+                    // Add visa term warning if applicable
+                    if (residencyStatus === 'workvisa') {
+                        warnings.push('Loan term must be within visa validity period');
+                    }
+                    
+                    // Add license note if applicable
+                    if ((loanType === 'vehicle-hp' || loanType === 'secured-personal') && licenseType === 'learners') {
+                        if (company.name === 'Geneva Finance' || company.acceptsLearnerLicense) {
+                            notes.push('Accepts learner license holders without co-borrower');
+                        } else {
+                            notes.push('Requires a suitable co-borrower with valid license (Restricted or Full)');
+                            requiresCoborrower = true;
+                        }
+                    }
+                    
+                    // Add age requirement note
+                    if (age < 22) {
+                        notes.push('Requires a suitable co-borrower (applicant under 22)');
+                        requiresCoborrower = true;
+                    }
+                    
+                    // Add casual employment note
+                    if (employmentType === 'casual') {
+                        notes.push('Requires a suitable co-borrower (casual employment)');
+                        requiresCoborrower = true;
+                    }
+                    
+                    // Add beneficiary note if applicable
+                    if (employmentType === 'beneficiary' && loanType === 'unsecured' && 
+                        company.acceptsBeneficiaryUnsecured) {
+                        notes.push('Accepts unsecured beneficiary loans');
+                        if (company.name === 'Aotea Finance') {
+                            notes.push('Subject to affordability assessment');
+                        }
+                    }
+                    
+                    // Add security value notes
+                    if ((loanType === 'vehicle-hp' || loanType === 'secured-personal') && securityValue > 0) {
+                        if (loanProduct.noLtvLimit) {
+                            notes.push('No limit on loan-to-value ratio');
+                        } else if (company.name === 'Geneva Finance' && loanType === 'secured-personal') {
+                            notes.push('Can lend up to 120% of security value');
+                        } else {
+                            notes.push('Can lend up to 100% of security value');
+                        }
+                    }
+                    
+                    // Add Finance Now centrix score notes
+                    if (company.name === 'Finance Now') {
+                        if (loanType === 'vehicle-hp') {
+                            notes.push('Minimum Centrix score: 450');
+                        } else if (loanType === 'secured-personal' || loanType === 'unsecured') {
+                            notes.push('Minimum Centrix score: 500');
+                        }
+                    }
+                    
+                    // Add last option warning
+                    if (company.isLastOption) {
+                        warnings.push('Use as a last option');
+                    }
+                    
+                    // Create company card HTML
+                    const companyCard = document.createElement('div');
+                    companyCard.className = 'company-card';
+                    
+                    // Format interest rate display
+                    let rateDisplay = 'N/A';
+                    if (loanProduct.rates && typeof loanProduct.rates === 'object' && 
+                        loanProduct.rates.min !== undefined && loanProduct.rates.max !== undefined) {
+                        rateDisplay = `${loanProduct.rates.min}% - ${loanProduct.rates.max}%`;
+                    }
+                    
+                    // Build HTML content
+                    companyCard.innerHTML = `
+                        <h3 class="company-name">${company.name}${requiresCoborrower ? ' <span class="warning">(Co-Borrower Required)</span>' : ''}</h3>
+                        ${company.isLastOption ? '<div class="last-option">⚠️ Use as a last option</div>' : ''}
+                        <div class="company-details">
+                            <div class="detail-group">
+                                <div class="detail-label">Loan Type</div>
+                                <div class="detail-value">${loanTypeText}</div>
+                            </div>
+                            <div class="detail-group">
+                                <div class="detail-label">Maximum Amount</div>
+                                <div class="detail-value">$${loanProduct.max.toLocaleString()}</div>
+                            </div>
+                            <div class="detail-group">
+                                <div class="detail-label">Interest Rate Range</div>
+                                <div class="detail-value">${rateDisplay}</div>
+                            </div>
+                            ${(loanType === 'vehicle-hp' || loanType === 'secured-personal') ? `
+                            <div class="detail-group">
+                                <div class="detail-label">Security Requirement</div>
+                                <div class="detail-value">${ltv === 'No limit' ? 'No specific limit' : `Up to ${ltv * 100}% of security value`}</div>
+                            </div>
+                            ${securityValue > 0 ? `
+                            <div class="detail-group">
+                                <div class="detail-label">Max Lend on $${securityValue.toLocaleString()} Security</div>
+                                <div class="detail-value">${maxLendOnSecurity}</div>
+                            </div>
+                            ` : ''}
+                            ` : ''}
+                        </div>
+                        ${warnings.length > 0 ? `
+                        <div class="highlight">
+                            <div class="highlight-title">Important Notice:</div>
+                            <ul class="warning">
+                                ${warnings.map(warning => `<li>${warning}</li>`).join('')}
+                            </ul>
+                        </div>
+                        ` : ''}
+                        ${notes.length > 0 ? `
+                        <div class="highlight" style="background-color: rgba(138, 207, 58, 0.15); border-left-color: var(--secondary-color);">
+                            <div class="highlight-title" style="color: var(--primary-color);">Notes:</div>
+                            <ul>
+                                ${notes.map(note => `<li>${note}</li>`).join('')}
+                            </ul>
+                        </div>
+                        ` : ''}
+                    `;
+                    
+                    // Add company card to results
+                    resultsContent.appendChild(companyCard);
+                });
+            }
+            
+            // Show results container
+            document.getElementById('resultsContainer').style.display = 'block';
+            document.getElementById('resultsContainer').scrollIntoView({ behavior: 'smooth' });
+        }
+    </script>
+</body>
+</html>

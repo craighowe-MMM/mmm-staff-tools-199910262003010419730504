@@ -1,0 +1,1421 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NZ CCCFA, AML/CFT & Privacy Act Training - MatcheMe Money</title>
+    <style>
+        :root {
+            --lime: #8ACF3A;
+            --forest: #2A4210;
+            --coral: #FF7E67;
+            --charcoal: #1C1C1C;
+            --sand: #FFF4D7;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--charcoal);
+            background: linear-gradient(135deg, var(--sand) 0%, #ffffff 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            background: linear-gradient(135deg, var(--forest) 0%, var(--lime) 100%);
+            color: white;
+            padding: 40px 0;
+            text-align: center;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(42, 66, 16, 0.3);
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            font-weight: 700;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+
+        .tab-container {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .tab-buttons {
+            display: flex;
+            background: var(--sand);
+            flex-wrap: wrap;
+        }
+
+        .tab-button {
+            flex: 1;
+            min-width: 200px;
+            padding: 20px 15px;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            font-size: 1.1em;
+            font-weight: 600;
+            color: var(--forest);
+            transition: all 0.3s ease;
+            border-bottom: 4px solid transparent;
+        }
+
+        .tab-button:hover {
+            background: rgba(138, 207, 58, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .tab-button.active {
+            background: var(--lime);
+            color: var(--forest);
+            border-bottom-color: var(--forest);
+        }
+
+        .tab-content {
+            display: none;
+            padding: 40px;
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .section {
+            margin-bottom: 30px;
+        }
+
+        .section h2 {
+            color: var(--forest);
+            font-size: 1.8em;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid var(--lime);
+        }
+
+        .section h3 {
+            color: var(--coral);
+            font-size: 1.4em;
+            margin-bottom: 15px;
+            margin-top: 25px;
+        }
+
+        .highlight-box {
+            background: linear-gradient(135deg, var(--sand) 0%, rgba(255, 244, 215, 0.5) 100%);
+            border-left: 5px solid var(--lime);
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 10px;
+        }
+
+        .warning-box {
+            background: linear-gradient(135deg, rgba(255, 126, 103, 0.1) 0%, rgba(255, 126, 103, 0.05) 100%);
+            border-left: 5px solid var(--coral);
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 10px;
+        }
+
+        .checklist {
+            background: white;
+            border: 2px solid var(--lime);
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .checklist h4 {
+            color: var(--forest);
+            margin-bottom: 15px;
+            font-size: 1.2em;
+        }
+
+        .checklist ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .checklist li {
+            padding: 8px 0;
+            position: relative;
+            padding-left: 30px;
+        }
+
+        .checklist li::before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: var(--lime);
+            font-weight: bold;
+            font-size: 1.2em;
+        }
+
+        .quiz-section {
+            background: linear-gradient(135deg, var(--forest) 0%, var(--lime) 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 15px;
+        }
+
+        .quiz-question {
+            display: none;
+            margin-bottom: 20px;
+        }
+
+        .quiz-question.active {
+            display: block;
+            animation: slideIn 0.5s ease;
+        }
+
+        @keyframes slideIn {
+            from { transform: translateX(100px); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        .quiz-options {
+            margin: 15px 0;
+        }
+
+        .quiz-options label {
+            display: block;
+            padding: 10px;
+            margin: 5px 0;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .quiz-options label:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .quiz-button {
+            background: var(--coral);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1em;
+            font-weight: 600;
+            margin: 10px 5px;
+            transition: all 0.3s ease;
+        }
+
+        .quiz-button:hover {
+            background: #e66a54;
+            transform: translateY(-2px);
+        }
+
+        .progress-bar {
+            background: rgba(255, 255, 255, 0.3);
+            height: 8px;
+            border-radius: 4px;
+            margin: 20px 0;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            background: var(--coral);
+            height: 100%;
+            width: 0;
+            border-radius: 4px;
+            transition: width 0.3s ease;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            padding: 20px;
+            color: var(--forest);
+            opacity: 0.8;
+        }
+
+        @media (max-width: 768px) {
+            .tab-buttons {
+                flex-direction: column;
+            }
+            
+            .tab-button {
+                min-width: unset;
+            }
+            
+            .tab-content {
+                padding: 20px;
+            }
+            
+            .header h1 {
+                font-size: 2em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🏦 MatcheMe Money Compliance Training</h1>
+            <p>NZ CCCFA, AML/CFT & Privacy Act 2020 - Staff Training Module</p>
+        </div>
+
+        <div class="tab-container">
+            <div class="tab-buttons">
+                <button class="tab-button active" onclick="showTab('overview')">📋 Overview</button>
+                <button class="tab-button" onclick="showTab('cccfa')">💳 CCCFA</button>
+                <button class="tab-button" onclick="showTab('aml')">🛡️ AML/CFT</button>
+                <button class="tab-button" onclick="showTab('privacy')">🔒 Privacy Act</button>
+                <button class="tab-button" onclick="showTab('practical')">⚡ Practical Guide</button>
+                <button class="tab-button" onclick="showTab('quiz')">🎯 Knowledge Check</button>
+            </div>
+
+            <div id="overview" class="tab-content active">
+                <div class="section">
+                    <h2>🎯 Training Overview</h2>
+                    <p>Welcome to MatcheMe Money's comprehensive compliance training program. This module covers your responsibilities under New Zealand's key financial and privacy legislation.</p>
+                    
+                    <div class="highlight-box">
+                        <h3>Why This Training Matters</h3>
+                        <p>As a financial services provider, MatcheMe Money must comply with strict regulatory requirements. Your understanding of these laws protects both our customers and our business from legal and financial risks.</p>
+                    </div>
+
+                    <div class="checklist">
+                        <h4>Learning Objectives</h4>
+                        <ul>
+                            <li>Understand CCCFA responsible lending obligations and assessment processes</li>
+                            <li>Implement AML/CFT customer due diligence and monitoring requirements</li>
+                            <li>Know how to handle customer information under Privacy Act 2020</li>
+                            <li>Apply compliance principles in daily work</li>
+                            <li>Identify and escalate compliance issues</li>
+                            <li>Protect customer rights and company interests</li>
+                        </ul>
+                    </div>
+
+                    <div class="warning-box">
+                        <h3>⚠️ Important Note</h3>
+                        <p><strong>Compliance is everyone's responsibility.</strong> Violations can result in significant fines (up to $2 million for AML breaches, $600,000 for CCCFA violations, $10,000 for Privacy Act offences), legal action, and damage to our reputation. When in doubt, always ask your supervisor or compliance team.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div id="cccfa" class="tab-content">
+                <div class="section">
+                    <h2>💳 Credit Contracts and Consumer Finance Act (CCCFA)</h2>
+                    
+                    <h3>What is the CCCFA?</h3>
+                    <p>The CCCFA regulates consumer credit to ensure responsible lending and protect borrowers from unaffordable debt. It applies to all consumer credit, including personal loans, credit cards, and buy-now-pay-later services.</p>
+
+                    <div class="highlight-box">
+                        <h3>Key Principles</h3>
+                        <p><strong>Responsible Lending:</strong> We must only lend to customers who can afford repayments without suffering substantial hardship.</p>
+                        <p><strong>Affordability Assessment:</strong> Every loan requires thorough assessment of the borrower's financial situation.</p>
+                    </div>
+
+                    <h3>Our CCCFA Obligations</h3>
+                    
+                    <h4>1. Pre-Contractual Disclosure</h4>
+                    <p>Before entering any credit contract, customers must receive:</p>
+                    <div class="checklist">
+                        <ul>
+                            <li><strong>Initial Disclosure Statement:</strong> Key terms, costs, and customer rights</li>
+                            <li><strong>Total cost of credit</strong> including all fees and charges</li>
+                            <li><strong>Annual interest rate</strong> and how it's calculated</li>
+                            <li><strong>Default fees</strong> and when they apply</li>
+                            <li><strong>Right to cancel</strong> within specified timeframes</li>
+                            <li><strong>Credit repossession rights</strong> (if applicable)</li>
+                        </ul>
+                    </div>
+
+                    <h4>2. Affordability Inquiries (Detailed Requirements)</h4>
+                    <div class="highlight-box">
+                        <h3>Income Verification Must Include:</h3>
+                        <ul>
+                            <li><strong>Employment verification:</strong> Payslips, employment contracts, IRD summaries</li>
+                            <li><strong>Self-employed income:</strong> Tax returns, bank statements, accountant statements</li>
+                            <li><strong>Benefit income:</strong> WINZ statements, income verification letters</li>
+                            <li><strong>Other income:</strong> Investment returns, rental income, child support</li>
+                            <li><strong>Income stability:</strong> Length of employment, likelihood of continuation</li>
+                        </ul>
+                    </div>
+
+                    <div class="checklist">
+                        <h4>Expense Assessment Requirements:</h4>
+                        <ul>
+                            <li><strong>Housing costs:</strong> Rent/mortgage, rates, insurance, maintenance</li>
+                            <li><strong>Utilities:</strong> Power, gas, water, telecommunications, internet</li>
+                            <li><strong>Food and groceries:</strong> Reasonable estimates based on household size</li>
+                            <li><strong>Transport:</strong> Vehicle costs, fuel, public transport, WOF, registration</li>
+                            <li><strong>Insurance:</strong> Life, health, income protection, vehicle</li>
+                            <li><strong>Dependents:</strong> Childcare, school costs, clothing, medical</li>
+                            <li><strong>Debt servicing:</strong> All existing credit commitments and minimum payments</li>
+                        </ul>
+                    </div>
+
+                    <h4>3. Comprehensive Affordability Assessment Process</h4>
+                    <p>The assessment must determine if the customer can make payments <strong>without substantial hardship</strong>:</p>
+                    
+                    <div class="warning-box">
+                        <h3>Assessment Methodology</h3>
+                        <ol>
+                            <li><strong>Net Income Calculation:</strong> Total verified income minus tax and other deductions</li>
+                            <li><strong>Essential Expenses:</strong> Calculate minimum living costs using verified expenses or industry benchmarks</li>
+                            <li><strong>Existing Debt Service:</strong> Include all current credit commitments</li>
+                            <li><strong>Surplus Income:</strong> Net income minus essential expenses and existing debt</li>
+                            <li><strong>Affordability Buffer:</strong> Maintain reasonable surplus for unexpected expenses</li>
+                            <li><strong>Stress Testing:</strong> Consider potential changes in income or expenses</li>
+                        </ol>
+                    </div>
+
+                    <div class="highlight-box">
+                        <h3>Documentation Requirements</h3>
+                        <p>Every affordability assessment must be documented with:</p>
+                        <ul>
+                            <li>Evidence of income verification</li>
+                            <li>Expense calculations and assumptions</li>
+                            <li>Credit history and existing commitments</li>
+                            <li>Assessment methodology and conclusions</li>
+                            <li>Decision rationale (approve/decline)</li>
+                            <li>Date, time, and assessor identification</li>
+                        </ul>
+                    </div>
+
+                    <h4>4. Ongoing Responsibilities</h4>
+                    <div class="checklist">
+                        <ul>
+                            <li><strong>Regular Statement Provision:</strong> Monthly or as agreed</li>
+                            <li><strong>Change in Circumstances:</strong> Monitor and respond to customer situations</li>
+                            <li><strong>Hardship Applications:</strong> Process within 10 working days</li>
+                            <li><strong>Variation Requests:</strong> Re-assess affordability for any changes</li>
+                            <li><strong>Default Management:</strong> Follow prescribed collection procedures</li>
+                        </ul>
+                    </div>
+
+                    <div class="warning-box">
+                        <h3>⚠️ Prohibited Practices - You Cannot:</h3>
+                        <ul>
+                            <li><strong>Encourage overborrowing:</strong> Suggest higher amounts than requested or needed</li>
+                            <li><strong>Rush decisions:</strong> Pressure customers to sign immediately</li>
+                            <li><strong>Ignore red flags:</strong> Override obvious affordability concerns</li>
+                            <li><strong>Inadequate assessment:</strong> Skip or minimise verification steps</li>
+                            <li><strong>Misleading advertising:</strong> False or incomplete cost information</li>
+                            <li><strong>Unfair contract terms:</strong> Include unreasonable or oppressive conditions</li>
+                            <li><strong>Ignore hardship:</strong> Fail to consider or respond to customer difficulties</li>
+                        </ul>
+                    </div>
+
+                    <h3>Specific Vulnerable Customer Protections</h3>
+                    <p>Enhanced care and consideration required for:</p>
+                    
+                    <h4>Financial Vulnerability Indicators:</h4>
+                    <ul>
+                        <li>Multiple credit applications in short timeframe</li>
+                        <li>Existing high debt-to-income ratios</li>
+                        <li>Previous defaults or financial hardship</li>
+                        <li>Irregular or declining income patterns</li>
+                        <li>High expense-to-income ratios</li>
+                    </ul>
+
+                    <h4>Personal Vulnerability Indicators:</h4>
+                    <ul>
+                        <li><strong>Age-related:</strong> Very young (18-25) or elderly (70+) customers</li>
+                        <li><strong>Language barriers:</strong> Limited English proficiency</li>
+                        <li><strong>Cognitive impairment:</strong> Mental health issues, intellectual disability</li>
+                        <li><strong>Family violence:</strong> Coercion indicators, joint applications with concerns</li>
+                        <li><strong>Social isolation:</strong> Limited support networks</li>
+                    </ul>
+
+                    <div class="highlight-box">
+                        <h3>Enhanced Assessment for Vulnerable Customers</h3>
+                        <ul>
+                            <li>Additional verification and documentation</li>
+                            <li>Extended cooling-off periods</li>
+                            <li>Clear explanation of obligations and risks</li>
+                            <li>Independent advice recommendations</li>
+                            <li>Regular check-ins and monitoring</li>
+                            <li>Escalation to senior staff for approval</li>
+                        </ul>
+                    </div>
+
+                    <h3>CCCFA Penalties and Enforcement</h3>
+                    <div class="warning-box">
+                        <h3>Potential Consequences</h3>
+                        <ul>
+                            <li><strong>Individual penalties:</strong> Up to $10,000 per breach</li>
+                            <li><strong>Company penalties:</strong> Up to $600,000 per breach</li>
+                            <li><strong>Licensing suspension:</strong> Loss of right to provide credit</li>
+                            <li><strong>Compensation orders:</strong> Repayment to affected customers</li>
+                            <li><strong>Reputation damage:</strong> Public enforcement action notices</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div id="aml" class="tab-content">
+                <div class="section">
+                    <h2>🛡️ Anti-Money Laundering and Countering Financing of Terrorism (AML/CFT)</h2>
+                    
+                    <h3>Overview of AML/CFT Act 2009</h3>
+                    <p>The AML/CFT Act requires financial institutions to detect and deter money laundering and terrorism financing. As a financial service provider, MatcheMe Money is a "reporting entity" with specific legal obligations.</p>
+
+                    <div class="highlight-box">
+                        <h3>Key Definitions</h3>
+                        <p><strong>Money Laundering:</strong> The process of making illegally-gained proceeds appear legal by passing them through complex transactions.</p>
+                        <p><strong>Terrorism Financing:</strong> Providing funds or financial services to support terrorist activities.</p>
+                        <p><strong>Beneficial Owner:</strong> The natural person who ultimately owns or controls a customer.</p>
+                    </div>
+
+                    <h3>Customer Due Diligence (CDD) Requirements</h3>
+                    
+                    <h4>Standard Customer Due Diligence</h4>
+                    <p>For all customers, we must:</p>
+                    <div class="checklist">
+                        <ul>
+                            <li><strong>Verify Identity:</strong> Government-issued photo ID (passport, driver licence)</li>
+                            <li><strong>Verify Address:</strong> Utility bill, bank statement, rates notice (within 3 months)</li>
+                            <li><strong>Verify Date of Birth:</strong> Through primary identity document</li>
+                            <li><strong>Understand Nature and Purpose:</strong> Why they need our services</li>
+                            <li><strong>Ongoing Monitoring:</strong> Watch for unusual transactions or changes</li>
+                        </ul>
+                    </div>
+
+                    <h4>Enhanced Customer Due Diligence (ECDD)</h4>
+                    <div class="warning-box">
+                        <h3>ECDD Required For:</h3>
+                        <ul>
+                            <li><strong>Politically Exposed Persons (PEPs):</strong> Senior political figures and their associates</li>
+                            <li><strong>High-risk countries:</strong> Customers from FATF-identified high-risk jurisdictions</li>
+                            <li><strong>Complex ownership:</strong> Trusts, companies with unclear beneficial ownership</li>
+                            <li><strong>Unusual transactions:</strong> Large, complex, or suspicious activity patterns</li>
+                            <li><strong>Correspondent banking:</strong> Relationships with foreign financial institutions</li>
+                        </ul>
+                    </div>
+
+                    <h4>ECDD Additional Requirements:</h4>
+                    <div class="checklist">
+                        <ul>
+                            <li>Senior management approval for establishing relationship</li>
+                            <li>Enhanced ongoing monitoring of transactions</li>
+                            <li>Additional information on source of funds/wealth</li>
+                            <li>More frequent review of customer information</li>
+                            <li>Detailed documentation of enhanced measures taken</li>
+                        </ul>
+                    </div>
+
+                    <h3>Simplified Customer Due Diligence (SCDD)</h3>
+                    <p>Reduced CDD may apply for lower-risk customers such as:</p>
+                    <ul>
+                        <li>NZ government departments and local authorities</li>
+                        <li>NZ publicly listed companies</li>
+                        <li>Other banks and financial institutions under AML supervision</li>
+                        <li>Low-value transactions under specific thresholds</li>
+                    </ul>
+
+                    <div class="highlight-box">
+                        <h3>Important: SCDD Still Requires</h3>
+                        <ul>
+                            <li>Basic identity verification</li>
+                            <li>Screening against sanctions lists</li>
+                            <li>Ongoing monitoring for suspicious activity</li>
+                            <li>Full CDD if risk profile changes</li>
+                        </ul>
+                    </div>
+
+                    <h3>Ongoing Customer Due Diligence</h3>
+                    <p>Our responsibilities don't end after initial verification:</p>
+                    <div class="checklist">
+                        <ul>
+                            <li><strong>Transaction Monitoring:</strong> Review for unusual patterns or amounts</li>
+                            <li><strong>Regular Updates:</strong> Refresh customer information periodically</li>
+                            <li><strong>Beneficial Ownership:</strong> Monitor changes in corporate structure</li>
+                            <li><strong>Sanctions Screening:</strong> Regular checks against updated lists</li>
+                            <li><strong>Risk Assessment:</strong> Reassess customer risk levels over time</li>
+                        </ul>
+                    </div>
+
+                    <h3>Suspicious Transaction Reporting</h3>
+                    <div class="warning-box">
+                        <h3>⚠️ Red Flags - Report Immediately</h3>
+                        <ul>
+                            <li><strong>Unusual transaction patterns:</strong> Sudden large deposits, round numbers</li>
+                            <li><strong>Inconsistent information:</strong> Customer details don't match documentation</li>
+                            <li><strong>Reluctance to provide information:</strong> Evasive about source of funds</li>
+                            <li><strong>Complex transactions:</strong> Unnecessarily complicated payment structures</li>
+                            <li><strong>Geographic concerns:</strong> Transactions involving high-risk countries</li>
+                            <li><strong>Cash-intensive businesses:</strong> Customers with predominantly cash operations</li>
+                            <li><strong>Rapid movement of funds:</strong> Money moving quickly through accounts</li>
+                        </ul>
+                    </div>
+
+                    <h4>Suspicious Activity Report (SAR) Process</h4>
+                    <ol>
+                        <li><strong>Immediate escalation:</strong> Report to AML Compliance Officer within 24 hours</li>
+                        <li><strong>Continue normal service:</strong> Don't alert customer to suspicions</li>
+                        <li><strong>Document everything:</strong> Record all relevant information and observations</li>
+                        <li><strong>Submit to FIU:</strong> File SAR with Financial Intelligence Unit within 3 working days</li>
+                        <li><strong>Ongoing monitoring:</strong> Enhanced surveillance of customer activity</li>
+                    </ol>
+
+                    <h3>Sanctions and Watchlist Screening</h3>
+                    <div class="highlight-box">
+                        <h3>Required Screening Lists</h3>
+                        <ul>
+                            <li><strong>UN Security Council:</strong> Consolidated sanctions list</li>
+                            <li><strong>NZ Autonomous Sanctions:</strong> New Zealand specific sanctions</li>
+                            <li><strong>Designated Individuals:</strong> Terrorism suppression designations</li>
+                            <li><strong>PEPs Lists:</strong> Politically exposed persons databases</li>
+                        </ul>
+                    </div>
+
+                    <p><strong>Screening Requirements:</strong></p>
+                    <ul>
+                        <li>Screen all new customers before establishing relationships</li>
+                        <li>Screen beneficiaries of transactions</li>
+                        <li>Regular re-screening of existing customers</li>
+                        <li>Immediate screening when lists are updated</li>
+                    </ul>
+
+                    <h3>Record Keeping Requirements</h3>
+                    <div class="checklist">
+                        <h4>Must Retain for 5 Years:</h4>
+                        <ul>
+                            <li>All customer due diligence documentation</li>
+                            <li>Transaction records and supporting documents</li>
+                            <li>Suspicious activity reports and analysis</li>
+                            <li>Risk assessments and reviews</li>
+                            <li>Training records and competency assessments</li>
+                            <li>AML/CFT programme documentation</li>
+                        </ul>
+                    </div>
+
+                    <h3>Wire Transfer Rules</h3>
+                    <p>International money transfers require additional information:</p>
+                    <div class="checklist">
+                        <ul>
+                            <li><strong>Originator information:</strong> Full name, address, account number</li>
+                            <li><strong>Beneficiary details:</strong> Name, address, account number</li>
+                            <li><strong>Purpose of transfer:</strong> Reason for sending money</li>
+                            <li><strong>Enhanced screening:</strong> Both sender and receiver screening</li>
+                        </ul>
+                    </div>
+
+                    <div class="warning-box">
+                        <h3>AML/CFT Penalties</h3>
+                        <ul>
+                            <li><strong>Civil penalties:</strong> Up to $2 million for companies</li>
+                            <li><strong>Criminal penalties:</strong> Up to $600,000 and 2 years imprisonment</li>
+                            <li><strong>Licensing action:</strong> Registration cancellation or suspension</li>
+                            <li><strong>Directors liability:</strong> Personal responsibility for company breaches</li>
+                            <li><strong>Reputation damage:</strong> Public enforcement action</li>
+                        </ul>
+                    </div>
+
+                    <h3>Your AML/CFT Responsibilities</h3>
+                    <div class="highlight-box">
+                        <h3>Daily Compliance Actions</h3>
+                        <ul>
+                            <li>Verify customer identity before providing services</li>
+                            <li>Screen customers against sanctions lists</li>
+                            <li>Monitor transactions for suspicious patterns</li>
+                            <li>Report unusual activity immediately</li>
+                            <li>Maintain accurate and complete records</li>
+                            <li>Complete regular AML/CFT training</li>
+                            <li>Stay alert to new typologies and risks</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div id="privacy" class="tab-content">
+                <div class="section">
+                    <h2>🔒 Privacy Act 2020</h2>
+                    
+                    <h3>Overview</h3>
+                    <p>The Privacy Act 2020 protects individuals' personal information and gives them rights over how their information is collected, used, and disclosed.</p>
+
+                    <div class="highlight-box">
+                        <h3>Key Definition</h3>
+                        <p><strong>Personal Information:</strong> Any information about an identifiable individual, including names, addresses, financial information, and even opinions about someone.</p>
+                    </div>
+
+                    <div class="highlight-box">
+                        <h3>Your Daily Privacy Responsibilities</h3>
+                        <p><strong>Every Day You Must:</strong></p>
+                        <ul>
+                            <li>Only collect personal information that's necessary</li>
+                            <li>Explain to customers why you're collecting their information</li>
+                            <li>Keep personal information secure and confidential</li>
+                            <li>Only use information for authorised purposes</li>
+                            <li>Never disclose information without proper authority</li>
+                            <li>Respond promptly to access and correction requests</li>
+                            <li>Report suspected breaches immediately</li>
+                            <li>Stay current with privacy training and updates</li>
+                        </ul>
+                    </div>
+
+                    <h3>The 13 Information Privacy Principles</h3>
+                    
+                    <h4>Collection Principles (1-4)</h4>
+                    <div class="checklist">
+                        <h4>Principle 1 - Purpose of Collection:</h4>
+                        <ul>
+                            <li>Only collect personal information for lawful purposes</li>
+                            <li>Collection must be necessary for our business functions</li>
+                            <li>Must be connected with our activities</li>
+                        </ul>
+                    </div>
+
+                    <div class="checklist">
+                        <h4>Principle 2 - Source of Personal Information:</h4>
+                        <ul>
+                            <li>Collect directly from the individual where practicable</li>
+                            <li>If collecting from third parties, ensure it's authorised</li>
+                            <li>Consider privacy implications of indirect collection</li>
+                        </ul>
+                    </div>
+
+                    <div class="checklist">
+                        <h4>Principle 3 - Collection of Information from Individual:</h4>
+                        <ul>
+                            <li>Inform customers when collecting their information</li>
+                            <li>Explain the purpose of collection</li>
+                            <li>Tell them who will receive the information</li>
+                            <li>Advise of their right to access and correct information</li>
+                            <li>Explain consequences of not providing information</li>
+                        </ul>
+                    </div>
+
+                    <div class="checklist">
+                        <h4>Principle 4 - Manner of Collection:</h4>
+                        <ul>
+                            <li>Collect information fairly and lawfully</li>
+                            <li>Don't collect by unlawful, unfair, or intrusive means</li>
+                            <li>Don't collect excessively</li>
+                        </ul>
+                    </div>
+
+                    <h4>Storage and Security (Principle 5)</h4>
+                    <div class="warning-box">
+                        <h3>Security Safeguards Required:</h3>
+                        <p>We must protect personal information with appropriate safeguards against:</p>
+                        <ul>
+                            <li>Loss or unauthorised access</li>
+                            <li>Use, modification, or disclosure</li>
+                            <li>Other misuse</li>
+                            <li>Damage or destruction</li>
+                        </ul>
+                    </div>
+
+                    <h4>Access and Correction (Principles 6-7)</h4>
+                    <div class="checklist">
+                        <h4>Principle 6 - Access to Personal Information:</h4>
+                        <ul>
+                            <li>Individuals can request access to their personal information</li>
+                            <li>Must respond within 20 working days</li>
+                            <li>Can charge reasonable fees (must advise in advance)</li>
+                            <li>Some information may be withheld (legal privilege, etc.)</li>
+                            <li>Must provide information in an intelligible form</li>
+                        </ul>
+                    </div>
+
+                    <div class="checklist">
+                        <h4>Principle 7 - Correction of Personal Information:</h4>
+                        <ul>
+                            <li>Individuals can request corrections to inaccurate information</li>
+                            <li>Must correct information if satisfied it's wrong</li>
+                            <li>If correction refused, must attach individual's statement</li>
+                            <li>Must take reasonable steps to notify others who received incorrect information</li>
+                        </ul>
+                    </div>
+
+                    <h4>Accuracy (Principle 8)</h4>
+                    <div class="checklist">
+                        <h4>We must ensure personal information is:</h4>
+                        <ul>
+                            <li>Accurate and up-to-date</li>
+                            <li>Complete and relevant</li>
+                            <li>Not misleading</li>
+                            <li>Checked before use for important decisions</li>
+                        </ul>
+                    </div>
+
+                    <h4>Retention (Principle 9)</h4>
+                    <p>Personal information should not be kept longer than necessary for the purposes we collected it. We must:</p>
+                    <ul>
+                        <li>Have clear retention policies</li>
+                        <li>Regularly review and delete unnecessary information</li>
+                        <li>Consider legal requirements for retention periods</li>
+                        <li>Securely dispose of information when no longer needed</li>
+                    </ul>
+
+                    <h4>Use and Disclosure (Principles 10-11)</h4>
+                    <div class="warning-box">
+                        <h3>⚠️ Principle 10 - Use of Personal Information</h3>
+                        <p><strong>Limited Use Rule:</strong> Personal information can only be used for:</p>
+                        <ul>
+                            <li>The purpose it was collected for</li>
+                            <li>Directly related purposes the individual would reasonably expect</li>
+                            <li>With the individual's consent</li>
+                            <li>When required or permitted by law</li>
+                        </ul>
+                    </div>
+
+                    <div class="warning-box">
+                        <h3>⚠️ Principle 11 - Disclosure of Personal Information</h3>
+                        <p><strong>Disclosure Restrictions:</strong> Can only disclose personal information:</p>
+                        <ul>
+                            <li>For the purpose it was collected</li>
+                            <li>With individual's consent</li>
+                            <li>When required by law (court orders, legislation)</li>
+                            <li>To prevent or lessen serious threat to public safety</li>
+                            <li>For law enforcement purposes (with proper authority)</li>
+                        </ul>
+                    </div>
+
+                    <h4>Disclosure Outside NZ (Principle 12)</h4>
+                    <div class="highlight-box">
+                        <h3>Overseas Disclosure Requirements:</h3>
+                        <p>Before disclosing personal information outside NZ, ensure:</p>
+                        <ul>
+                            <li>Individual has been informed of overseas disclosure</li>
+                            <li>Individual has consented, or disclosure is otherwise permitted</li>
+                            <li>Receiving country has comparable privacy protections</li>
+                            <li>Consider using contractual safeguards</li>
+                        </ul>
+                    </div>
+
+                    <h4>Unique Identifiers (Principle 13)</h4>
+                    <p>Restrictions on assigning and using unique identifiers:</p>
+                    <ul>
+                        <li>Only assign unique identifiers when necessary</li>
+                        <li>Don't adopt identifiers assigned by other organisations</li>
+                        <li>Don't require individuals to disclose unique identifiers unless authorised</li>
+                        <li>Keep unique identifiers secure and confidential</li>
+                    </ul>
+
+                    <h3>Privacy Breach Management</h3>
+                    <div class="highlight-box">
+                        <h3>Immediate Response Steps:</h3>
+                        <p>If you suspect a privacy breach:</p>
+                        <ol>
+                            <li><strong>Contain:</strong> Stop the breach from continuing or getting worse</li>
+                            <li><strong>Assess:</strong> Determine what information was involved and who was affected</li>
+                            <li><strong>Report:</strong> Notify your supervisor immediately</li>
+                            <li><strong>Document:</strong> Record what happened, when, and what actions were taken</li>
+                            <li><strong>Investigate:</strong> Find out how the breach occurred</li>
+                            <li><strong>Notify:</strong> Inform affected individuals if required</li>
+                        </ol>
+                    </div>
+
+                    <h3>Notifiable Privacy Breaches</h3>
+                    <div class="warning-box">
+                        <h3>Must Report to Privacy Commissioner within 72 hours if breach:</h3>
+                        <ul>
+                            <li><strong>Causes serious harm:</strong> Or is likely to cause serious harm</li>
+                            <li><strong>Involves sensitive information:</strong> Health, financial, or other sensitive data</li>
+                            <li><strong>Affects many people:</strong> Large number of individuals impacted</li>
+                            <li><strong>Could enable identity theft:</strong> Or other serious harm</li>
+                            <li><strong>Involves systemic issues:</strong> Problems with security or processes</li>
+                        </ul>
+                    </div>
+
+                    <h4>What constitutes "Serious Harm"?</h4>
+                    <ul>
+                        <li>Significant humiliation, hurt feelings, or loss of dignity</li>
+                        <li>Damage to reputation or relationships</li>
+                        <li>Financial loss or identity theft</li>
+                        <li>Loss of business or employment opportunities</li>
+                        <li>Physical or psychological harm</li>
+                        <li>Discrimination or other unfair treatment</li>
+                    </ul>
+
+                    <h3>Individual Rights Under Privacy Act</h3>
+                    <div class="checklist">
+                        <h4>Customers have the right to:</h4>
+                        <ul>
+                            <li><strong>Know:</strong> What personal information we hold about them</li>
+                            <li><strong>Access:</strong> Request copies of their personal information</li>
+                            <li><strong>Correct:</strong> Have inaccurate information corrected</li>
+                            <li><strong>Complain:</strong> Lodge complaints about privacy breaches</li>
+                            <li><strong>Compensation:</strong> Seek damages for privacy violations</li>
+                        </ul>
+                    </div>
+
+                    <div class="warning-box">
+                        <h3>Privacy Act Penalties</h3>
+                        <ul>
+                            <li><strong>Offence penalties:</strong> Up to $10,000 for individuals and agencies</li>
+                            <li><strong>Failure to notify breach:</strong> Up to $10,000 for not reporting notifiable breaches</li>
+                            <li><strong>Compensation orders:</strong> Payment to affected individuals through Human Rights Review Tribunal</li>
+                            <li><strong>Declaration orders:</strong> Public acknowledgment of breach</li>
+                            <li><strong>Reputation damage:</strong> Loss of customer trust</li>
+                            <li><strong>Civil action:</strong> Individuals can sue for damages</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div id="practical" class="tab-content">
+                <div class="section">
+                    <h2>⚡ Practical Application Guide</h2>
+                    
+                    <h3>Daily Compliance Actions</h3>
+                    
+                    <h4>Customer Interactions</h4>
+                    <div class="checklist">
+                        <h4>Always:</h4>
+                        <ul>
+                            <li>Verify customer identity before discussing accounts</li>
+                            <li>Explain why you need personal information</li>
+                            <li>Keep conversations confidential</li>
+                            <li>Document interactions accurately</li>
+                            <li>Follow up on customer concerns promptly</li>
+                        </ul>
+                    </div>
+
+                    <h4>Information Handling</h4>
+                    <div class="warning-box">
+                        <h3>⚠️ Security Checklist</h3>
+                        <ul>
+                            <li>Lock your computer when away</li>
+                            <li>Don't discuss customer information in public</li>
+                            <li>Shred confidential documents</li>
+                            <li>Use secure email for sensitive information</li>
+                            <li>Report lost devices immediately</li>
+                        </ul>
+                    </div>
+
+                    <h3>Common Scenarios</h3>
+                    
+                    <h4>Scenario 1: Customer Requests Credit Increase</h4>
+                    <p><strong>CCCFA Response:</strong></p>
+                    <ul>
+                        <li>Treat as new credit application - full affordability assessment required</li>
+                        <li>Consider cumulative effect of all existing and proposed credit</li>
+                        <li>Verify any changes in income or circumstances since last assessment</li>
+                        <li>Don't encourage unnecessary borrowing or suggest higher amounts</li>
+                        <li>Document assessment thoroughly with updated evidence</li>
+                        <li>Consider impact on customer's financial resilience</li>
+                    </ul>
+
+                    <h4>Scenario 2: Suspicious Transaction Detected</h4>
+                    <p><strong>AML/CFT Response:</strong></p>
+                    <ul>
+                        <li>Don't alert the customer to your suspicions</li>
+                        <li>Document all observations immediately</li>
+                        <li>Report to AML Compliance Officer within 24 hours</li>
+                        <li>Continue providing normal service levels</li>
+                        <li>Gather additional information discreetly if possible</li>
+                        <li>Monitor account for further unusual activity</li>
+                    </ul>
+
+                    <h4>Scenario 3: Customer Information Request</h4>
+                    <p><strong>Privacy Act Response:</strong></p>
+                    <ul>
+                        <li>Verify customer identity using standard procedures</li>
+                        <li>Provide information within 20 working days</li>
+                        <li>Include all personal information held, not just account data</li>
+                        <li>Explain any codes, abbreviations, or technical terms</li>
+                        <li>Charge reasonable fees if applicable (must advise in advance)</li>
+                        <li>Consider if any information should be withheld (legal privilege, etc.)</li>
+                    </ul>
+
+                    <h4>Scenario 4: Third Party Inquiry About Customer</h4>
+                    <p><strong>Privacy Protection Response:</strong></p>
+                    <ul>
+                        <li>Don't confirm customer has accounts or relationships with us</li>
+                        <li>Require written consent from customer for any information sharing</li>
+                        <li>Check if legal exception applies (court order, law enforcement)</li>
+                        <li>Escalate to supervisor if uncertain about legal requirements</li>
+                        <li>Document the request and your response</li>
+                    </ul>
+
+                    <h4>Scenario 5: Customer Unable to Verify Identity</h4>
+                    <p><strong>AML/CFT Response:</strong></p>
+                    <ul>
+                        <li>Cannot establish business relationship without proper CDD</li>
+                        <li>Explore alternative verification methods if available</li>
+                        <li>Consider if customer qualifies for simplified CDD</li>
+                        <li>Provide clear explanation of requirements to customer</li>
+                        <li>Document attempts and reasons for declining service</li>
+                        <li>Consider if situation appears suspicious</li>
+                    </ul>
+
+                    <h4>Scenario 6: Vulnerable Customer Seeking Large Loan</h4>
+                    <p><strong>CCCFA Enhanced Assessment:</strong></p>
+                    <ul>
+                        <li>Apply enhanced affordability assessment procedures</li>
+                        <li>Consider recommending independent financial advice</li>
+                        <li>Extend cooling-off period beyond minimum requirements</li>
+                        <li>Ensure customer fully understands obligations and risks</li>
+                        <li>Obtain senior management approval for decision</li>
+                        <li>Implement enhanced ongoing monitoring if approved</li>
+                    </ul>
+
+                    <div class="highlight-box">
+                        <h3>When in Doubt - Escalation Process</h3>
+                        <p><strong>Immediate Actions:</strong></p>
+                        <ol>
+                            <li>Pause the interaction - don't make hasty decisions</li>
+                            <li>Consult your supervisor or relevant compliance team</li>
+                            <li>Document the issue and your concerns clearly</li>
+                            <li>Follow up with the customer within agreed timeframes</li>
+                            <li>Learn from the experience for future situations</li>
+                        </ol>
+                    </div>
+
+                    <h3>Enhanced Record Keeping Requirements</h3>
+                    <div class="checklist">
+                        <h4>CCCFA Documentation:</h4>
+                        <ul>
+                            <li>Complete affordability assessment records</li>
+                            <li>Evidence of income and expense verification</li>
+                            <li>Customer consents and acknowledgments</li>
+                            <li>Decision rationales and approval authorities</li>
+                            <li>Ongoing monitoring notes and reviews</li>
+                        </ul>
+                    </div>
+
+                    <div class="checklist">
+                        <h4>AML/CFT Documentation:</h4>
+                        <ul>
+                            <li>Customer identification and verification documents</li>
+                            <li>Beneficial ownership information and updates</li>
+                            <li>Risk assessments and review dates</li>
+                            <li>Transaction monitoring reports and analysis</li>
+                            <li>Suspicious activity reports and supporting evidence</li>
+                            <li>Sanctions screening results and actions taken</li>
+                        </ul>
+                    </div>
+
+                    <div class="checklist">
+                        <h4>Privacy Act Documentation:</h4>
+                        <ul>
+                            <li>Privacy collection notices provided to customers</li>
+                            <li>Customer consents for information use and disclosure</li>
+                            <li>Information access requests and responses</li>
+                            <li>Correction requests and actions taken</li>
+                            <li>Breach incident reports and remediation steps</li>
+                        </ul>
+                    </div>
+
+                    <div class="warning-box">
+                        <h3>⚠️ Critical Compliance Reminders</h3>
+                        <ul>
+                            <li><strong>Never assume</strong> - verify all information independently</li>
+                            <li><strong>Document everything</strong> - your records may be reviewed by regulators</li>
+                            <li><strong>Stay current</strong> - laws and regulations change regularly</li>
+                            <li><strong>Ask questions</strong> - it's better to seek guidance than make mistakes</li>
+                            <li><strong>Think customer outcomes</strong> - compliance protects customers and business</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div id="quiz" class="tab-content">
+                <div class="quiz-section">
+                    <h2>🎯 Knowledge Check</h2>
+                    <p>Test your understanding of CCCFA, AML/CFT, and Privacy Act requirements.</p>
+                    
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="progressBar"></div>
+                    </div>
+                    <p id="progressText">Question 1 of 20</p>
+
+                    <div class="quiz-question active" id="q1">
+                        <h3>1. Under the CCCFA, what is the main requirement before providing credit?</h3>
+                        <div class="quiz-options">
+                            <label><input type="radio" name="q1" value="a"> Check customer's credit score only</label>
+                            <label><input type="radio" name="q1" value="b"> Conduct thorough affordability assessment</label>
+                            <label><input type="radio" name="q1" value="c"> Get customer to sign disclaimer</label>
+                            <label><input type="radio" name="q1" value="d"> Offer maximum available credit</label>
+                        </div>
+                    </div>
+
+                    <div class="quiz-question" id="q2">
+                        <h3>2. When conducting affordability assessments, you must verify:</h3>
+                        <div class="quiz-options">
+                            <label><input type="radio" name="q2" value="a"> Only the customer's income</label>
+                            <label><input type="radio" name="q2" value="b"> Income, expenses, existing debts, and maintain affordability buffer</label>
+                            <label><input type="radio" name="q2" value="c"> Only previous repayment history</label>
+                            <label><input type="radio" name="q2" value="d"> Just the amount requested</label>
+                        </div>
+                    </div>
+
+                    <div class="quiz-question" id="q3">
+                        <h3>3. Under AML/CFT, Enhanced Customer Due Diligence (ECDD) is required for:</h3>
+                        <div class="quiz-options">
+                            <label><input type="radio" name="q3" value="a"> All customers opening accounts</label>
+                            <label><input type="radio" name="q3" value="b"> Only customers with poor credit history</label>
+                            <label><input type="radio" name="q3" value="c"> Politically Exposed Persons and high-risk customers</label>
+                            <label><input type="radio" name="q3" value="d"> Customers under 25 years old</label>
+                        </div>
+                    </div>
+
+                    <div class="quiz-question" id="q4">
+                        <h3>4. If you identify suspicious transaction activity, you must:</h3>
+                        <div class="quiz-options">
+                            <label><input type="radio" name="q4" value="a"> Ask the customer to explain immediately</label>
+                            <label><input type="radio" name="q4" value="b"> Report to AML Compliance Officer within 24 hours without alerting customer</label>
+                            <label><input type="radio" name="q4" value="c"> Close the customer's account immediately</label>
+                            <label><input type="radio" name="q4" value="d"> Wait to see if it happens again</label>
+                        </div>
+                    </div>
+
+                    <div class="quiz-question" id="q5">
+                        <h3>5. Personal information under the Privacy Act includes:</h3>
+                        <div class="quiz-options">
+                            <label><input type="radio" name="q5" value="a"> Only names and addresses</label>
+                            <label><input type="radio" name="q5" value="b"> Financial information only</label>
+                            <label><input type="radio" name="q5" value="c"> Any information about an identifiable person</label>
+                            <label><input type="radio" name="q5" value="d"> Only sensitive personal details</label>
+                        </div>
+                    </div>
+
+                    <div class="quiz-question" id="q6">
+                        <h3>6. If a customer asks for their personal information, you must provide it within:</h3>
+                        <div class="quiz-options">
+                            <label><input type="radio" name="q6" value="a"> 24 hours</label>
+                            <label><input type="radio" name="q6" value="b"> 5 working days</label>
+                            <label><input type="radio" name="q6" value="c"> 20 working days</label>
+                            <label><input type="radio" name="q6" value="d"> 30 calendar days</label>
+                        </div>
+                    </div>
+
+                    <div class="quiz-question" id="q7">
+                        <h3>7. A customer's spouse calls asking about their partner's account balance. You should:</h3>
+                        <div class="quiz-options">
+                            <label><input type="radio" name="q7" value="a"> Provide the information as they're married</label>
+                            <label><input type="radio" name="q7" value="b"> Refuse to confirm the person has an account</label>
+                            <label><input type="radio" name="q7" value="c"> Ask for their relationship details first</label>
+                            <label><input type="radio" name="q7" value="d"> Give general account information only</label>
+                        </div>
+                    </div>
+
+                    <div class="quiz-question" id="q8">
+                        <h3>8. Under CCCFA, you cannot:</h3>
+                        <div class="quiz-options">
+                            <label><input type="radio" name="q8" value="a"> Ask about customer expenses</label>
+                            <label><input type="radio" name="q8" value="b"> Encourage customers to borrow more than needed</label>
+                            <label><input type="radio" name="q8" value="c"> Verify customer income</label>
+                            <label><input type="radio" name="q8" value="d"> Check credit history</label>
+                        </div>
+                    </div>
+
+                    <div class="quiz-question" id="q9">
+                        <h3>9. AML/CFT records must be kept for:</h3>
+                        <div class="quiz-options">
+                            <label><input type="radio" name="q9" value="a"> 3 years</label>
+                            <label><input type="radio" name="q9" value="b"> 5 years</label>
+                            <label><input type="radio" name="q9" value="c"> 7 years</label>
+                            <label><input type="radio" name="q9" value="d"> 10 years</label>
+                        </div>
+                    </div>
+
+                    <div class="quiz-question" id="q10">
+                        <h3>10. When assessing vulnerable customers for credit, you should:</h3>
+                        <div class="quiz-options">
+                            <label><input type="radio" name="q10" value="a"> Use the same process as all customers</label>
+                            <label><input type="radio" name="q10" value="b"> Apply enhanced assessment and get senior approval</label>
+                            <label><input type="radio" name="q10" value="c"> Automatically decline the application</label>
+                            <label><input type="radio" name="q10" value="d"> Offer a smaller loan amount</label>
+                        </div>
+                    </div>
+
+                    <div class="quiz-question" id="q11">
+                        <h3>11. Standard Customer Due Diligence requires verification of:</h3>
+                        <div class="quiz-options">
+                            <label><input type="radio" name="q11" value="a"> Identity and address only</label>
+                            <label><input type="radio" name="q11" value="b"> Identity, address, date of birth, and nature/purpose of relationship</label>
+                            <label><input type="radio" name="q11" value="c"> Just government-issued photo ID</label>
+                            <label><input type="radio" name="q11" value="d"> Income and employment details</label>
+                        </div>
+                    </div>
+
+                    <div class="quiz-question" id="q12">
+                        <h3>12. If you suspect a privacy breach has occurred, your first action should be:</h3>
+                        <div class="quiz-options">
+                            <label><input type="radio" name="q12" value="a"> Investigate it yourself</label>
+                            <label><input type="radio" name="q12" value="b"> Wait to see if anything happens</label>
+                            <label><input type="radio" name="q12" value="c"> Report it immediately to your supervisor</label>
+                            <label><input type="radio" name="q12" value="d"> Contact the customer directly</label>
+                        </div>
+                    </div>
+
+                    <div class="quiz-question" id="q13">
+                        <h3>13. The Privacy Act 2020 has how many Information Privacy Principles?</h3>
+                        <div class="quiz-options">
+                            <label><input type="radio" name="q13" value="a"> 10 principles</label>
+                            <label><input type="radio" name="q13" value="b"> 12 principles</label>
+                            <label><input type="radio" name="q13" value="c"> 13 principles</label>
+                            <label><input type="radio" name="q13" value="d"> 15 principles</label>
+                        </div>
+                    </div>
+
+                    <div class="quiz-question" id="q14">
+                        <h3>14. Under CCCFA, hardship applications must be processed within:</h3>
+                        <div class="quiz-options">
+                            <label><input type="radio" name="q14" value="a"> 5 working days</label>
+                            <label><input type="radio" name="q14" value="b"> 10 working days</label>
+                            <label><input type="radio" name="q14" value="c"> 15 working days</label>
+                            <label><input type="radio" name="q14" value="d"> 20 working days</label>
+                        </div>
+                    </div>
+
+                    <div class="quiz-question" id="q15">
+                        <h3>15. What does SCDD stand for in AML/CFT?</h3>
+                        <div class="quiz-options">
+                            <label><input type="radio" name="q15" value="a"> Standard Customer Due Diligence</label>
+                            <label><input type="radio" name="q15" value="b"> Simplified Customer Due Diligence</label>
+                            <label><input type="radio" name="q15" value="c"> Special Customer Due Diligence</label>
+                            <label><input type="radio" name="q15" value="d"> Supervised Customer Due Diligence</label>
+                        </div>
+                    </div>
+
+                    <div class="quiz-question" id="q16">
+                        <h3>16. Personal information can be disclosed without consent when:</h3>
+                        <div class="quiz-options">
+                            <label><input type="radio" name="q16" value="a"> Never, consent is always required</label>
+                            <label><input type="radio" name="q16" value="b"> Required by law or to prevent serious harm</label>
+                            <label><input type="radio" name="q16" value="c"> Requested by any government agency</label>
+                            <label><input type="radio" name="q16" value="d"> When it benefits the business</label>
+                        </div>
+                    </div>
+
+                    <div class="quiz-question" id="q17">
+                        <h3>17. Under CCCFA, what is meant by "substantial hardship"?</h3>
+                        <div class="quiz-options">
+                            <label><input type="radio" name="q17" value="a"> Any financial difficulty</label>
+                            <label><input type="radio" name="q17" value="b"> Significant adverse effects on the borrower's ability to meet basic living expenses</label>
+                            <label><input type="radio" name="q17" value="c"> Missing one payment</label>
+                            <label><input type="radio" name="q17" value="d"> Having to reduce discretionary spending</label>
+                        </div>
+                    </div>
+
+                    <div class="quiz-question" id="q18">
+                        <h3>18. A notifiable privacy breach must be reported to the Privacy Commissioner within:</h3>
+                        <div class="quiz-options">
+                            <label><input type="radio" name="q18" value="a"> 24 hours</label>
+                            <label><input type="radio" name="q18" value="b"> 48 hours</label>
+                            <label><input type="radio" name="q18" value="c"> 72 hours</label>
+                            <label><input type="radio" name="q18" value="d"> 7 days</label>
+                        </div>
+                    </div>
+
+                    <div class="quiz-question" id="q19">
+                        <h3>19. Which of these is NOT a red flag for suspicious activity under AML/CFT?</h3>
+                        <div class="quiz-options">
+                            <label><input type="radio" name="q19" value="a"> Customer reluctant to provide identification</label>
+                            <label><input type="radio" name="q19" value="b"> Large cash deposits with no clear source</label>
+                            <label><input type="radio" name="q19" value="c"> Customer asking about interest rates</label>
+                            <label><input type="radio" name="q19" value="d"> Unusual transaction patterns for the customer</label>
+                        </div>
+                    </div>
+
+                    <div class="quiz-question" id="q20">
+                        <h3>20. Under the CCCFA, disclosure statements must be provided:</h3>
+                        <div class="quiz-options">
+                            <label><input type="radio" name="q20" value="a"> After the contract is signed</label>
+                            <label><input type="radio" name="q20" value="b"> Before the contract is entered into</label>
+                            <label><input type="radio" name="q20" value="c"> Within 7 days of signing</label>
+                            <label><input type="radio" name="q20" value="d"> Only if the customer requests them</label>
+                        </div>
+                    </div>
+
+                    <div style="margin-top: 20px;">
+                        <button class="quiz-button" onclick="previousQuestion()">← Previous</button>
+                        <button class="quiz-button" onclick="nextQuestion()">Next →</button>
+                        <button class="quiz-button" onclick="submitQuiz()" style="background: var(--lime); color: var(--forest); display: none;" id="submitBtn">Submit Quiz</button>
+                    </div>
+
+                    <div id="results" style="display: none; margin-top: 30px;">
+                        <h3>Quiz Results</h3>
+                        <div id="score"></div>
+                        <div id="feedback"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>© 2025 MatcheMe Money - Compliance Training Module<br>
+            For questions about this training, contact your supervisor or compliance team.</p>
+        </div>
+    </div>
+
+    <script>
+        let currentQuestion = 1;
+        const totalQuestions = 20;
+        let answers = {};
+
+        function showTab(tabName) {
+            // Hide all tabs
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            document.querySelectorAll('.tab-button').forEach(btn => {
+                btn.classList.remove('active');
+            });
+
+            // Show selected tab
+            document.getElementById(tabName).classList.add('active');
+            event.target.classList.add('active');
+        }
+
+        function updateProgress() {
+            const progress = (currentQuestion / totalQuestions) * 100;
+            document.getElementById('progressBar').style.width = progress + '%';
+            document.getElementById('progressText').textContent = `Question ${currentQuestion} of ${totalQuestions}`;
+        }
+
+        function showQuestion(questionNum) {
+            document.querySelectorAll('.quiz-question').forEach(q => {
+                q.classList.remove('active');
+            });
+            document.getElementById(`q${questionNum}`).classList.add('active');
+            
+            updateProgress();
+
+            // Show/hide submit button
+            if (questionNum === totalQuestions) {
+                document.getElementById('submitBtn').style.display = 'inline-block';
+            } else {
+                document.getElementById('submitBtn').style.display = 'none';
+            }
+        }
+
+        function nextQuestion() {
+            if (currentQuestion < totalQuestions) {
+                currentQuestion++;
+                showQuestion(currentQuestion);
+            }
+        }
+
+        function previousQuestion() {
+            if (currentQuestion > 1) {
+                currentQuestion--;
+                showQuestion(currentQuestion);
+            }
+        }
+
+        function submitQuiz() {
+            // Collect answers
+            const correctAnswers = {
+                q1: 'b',  // Conduct thorough affordability assessment
+                q2: 'b',  // Income, expenses, existing debts, and maintain affordability buffer
+                q3: 'c',  // Politically Exposed Persons and high-risk customers
+                q4: 'b',  // Report to AML Compliance Officer within 24 hours without alerting customer
+                q5: 'c',  // Any information about an identifiable person
+                q6: 'c',  // 20 working days
+                q7: 'b',  // Refuse to confirm the person has an account
+                q8: 'b',  // Encourage customers to borrow more than needed
+                q9: 'b',  // 5 years
+                q10: 'b', // Apply enhanced assessment and get senior approval
+                q11: 'b', // Identity, address, date of birth, and nature/purpose of relationship
+                q12: 'c', // Report it immediately to your supervisor
+                q13: 'c', // 13 principles
+                q14: 'b', // 10 working days
+                q15: 'b', // Simplified Customer Due Diligence
+                q16: 'b', // Required by law or to prevent serious harm
+                q17: 'b', // Significant adverse effects on the borrower's ability to meet basic living expenses
+                q18: 'c', // 72 hours
+                q19: 'c', // Customer asking about interest rates
+                q20: 'b'  // Before the contract is entered into
+            };
+
+            let score = 0;
+            
+            for (let i = 1; i <= totalQuestions; i++) {
+                const selected = document.querySelector(`input[name="q${i}"]:checked`);
+                if (selected) {
+                    answers[`q${i}`] = selected.value;
+                    if (selected.value === correctAnswers[`q${i}`]) {
+                        score++;
+                    }
+                }
+            }
+
+            const percentage = Math.round((score / totalQuestions) * 100);
+            
+            // Show results
+            document.getElementById('results').style.display = 'block';
+            document.getElementById('score').innerHTML = `
+                <div style="font-size: 2em; color: ${percentage >= 80 ? 'var(--lime)' : 'var(--coral)'};">
+                    ${score}/${totalQuestions} (${percentage}%)
+                </div>
+            `;
+
+            let feedbackMessage = '';
+            if (percentage >= 80) {
+                feedbackMessage = `
+                    <div style="background: rgba(138, 207, 58, 0.2); padding: 20px; border-radius: 10px; margin-top: 15px;">
+                        <h4 style="color: var(--forest);">🎉 Congratulations!</h4>
+                        <p>You've successfully completed the compliance training. You demonstrate a good understanding of CCCFA, AML/CFT, and Privacy Act requirements.</p>
+                        <p><strong>Next Steps:</strong> Print or save this page as evidence of training completion, and keep it for your records.</p>
+                    </div>
+                `;
+            } else {
+                feedbackMessage = `
+                    <div style="background: rgba(255, 126, 103, 0.2); padding: 20px; border-radius: 10px; margin-top: 15px;">
+                        <h4 style="color: var(--coral);">📚 Additional Study Needed</h4>
+                        <p>You need to achieve 80% or higher to complete this training. Please review the material and retake the quiz.</p>
+                        <p><strong>Focus areas:</strong> Review the sections on ${percentage < 50 ? 'all three compliance areas fundamentals' : percentage < 70 ? 'practical applications and scenarios' : 'specific compliance requirements'}.</p>
+                        <button class="quiz-button" onclick="retakeQuiz()" style="margin-top: 15px;">Retake Quiz</button>
+                    </div>
+                `;
+            }
+
+            document.getElementById('feedback').innerHTML = feedbackMessage;
+        }
+
+        function retakeQuiz() {
+            currentQuestion = 1;
+            answers = {};
+            
+            // Clear all selected answers
+            document.querySelectorAll('input[type="radio"]').forEach(radio => {
+                radio.checked = false;
+            });
+            
+            // Hide results and reset quiz
+            document.getElementById('results').style.display = 'none';
+            showQuestion(1);
+        }
+
+        // Auto-save progress as user answers questions
+        document.addEventListener('change', function(e) {
+            if (e.target.type === 'radio') {
+                answers[e.target.name] = e.target.value;
+            }
+        });
+
+        // Initialize quiz
+        updateProgress();
+    </script>
+</body>
+</html>
